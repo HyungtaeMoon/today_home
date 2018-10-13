@@ -13,7 +13,7 @@ def get_mode():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--mode',
-        help='Docker build mode [base, local, dev, production]',
+        help='Docker build mode [{}]'.format(', '.join(MODES)),
     )
     args = parser.parse_args()
 
@@ -24,10 +24,8 @@ def get_mode():
     else:
         while True:
             print('Select mode')
-            print(' 1. base')
-            print(' 2. local')
-            print(' 3. dev')
-            print(' 4. production')
+            for index, mode_name in enumerate(MODES, start=1):
+                print(f' {index}. {mode_name}')
             selected_mode = input('Choice: ')
             try:
                 mode_index = int(selected_mode) - 1

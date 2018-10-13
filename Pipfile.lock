@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2af26894290e1e0ddac97eded33193ce678337f05b16e536f021c66be3fd01bf"
+            "sha256": "0330090c1537cb124cab3ab8f13656304f4469e7c51beca05511f3a990058245"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -30,6 +30,13 @@
                 "sha256:ffb9ef1de172603304d9d2819af6f5ece76f2e85ec10692a524dd876e72bf277"
             ],
             "version": "==2018.5"
+        },
+        "uwsgi": {
+            "hashes": [
+                "sha256:d2318235c74665a60021a4fc7770e9c2756f9fc07de7b8c22805efe85b5ab277"
+            ],
+            "index": "pypi",
+            "version": "==2.0.17.1"
         }
     },
     "develop": {
@@ -49,10 +56,10 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:4152cd92e7f979707e35be7d4fa18f0435050b460e0a54cd88db27c2586d8886",
-                "sha256:dde120395f3775fa2273c1e0e5b909532f74461601d85c6c5f5f719991cffd22"
+                "sha256:24d91aab646c5f63b6ad6fd8907228c62d181cd1dc2309b54345663940514867",
+                "sha256:d10a7513f0e19eee9711ae39f3182b67442be9b2fa7054bd0ff8dc6c22856799"
             ],
-            "version": "==1.12.20"
+            "version": "==1.12.22"
         },
         "cached-property": {
             "hashes": [
