@@ -23,6 +23,17 @@ AUTH_USER_MODEL = 'members.User'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets['SECRET_KEY']
 
+# AWS
+AWS_ACCESS_KEY_ID = secrets['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = secrets['AWS_SECRET_ACCESS_KEY']
+AWS_DEFAULT_ACL = secrets['AWS_DEFAULT_ACL']
+AWS_S3_REGION_NAME = secrets['AWS_S3_REGION_NAME']
+AWS_S3_SIGNATURE_VERSION = secrets['AWS_S3_SIGNATURE_VERSION']
+
+# Static
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
+
 # Application definition
 
 INSTALLED_APPS = [

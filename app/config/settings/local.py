@@ -3,17 +3,9 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Static
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
-
-# Media
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
-
 WSGI_APPLICATION = 'config.wsgi.local.application'
 
-
+# DB
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -21,6 +13,11 @@ DATABASES = {
     }
 }
 
+# Media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+
+# Log
 LOG_DIR = os.path.join(ROOT_DIR, '.log')
 LOGGING = {
     'version': 1,
