@@ -10,6 +10,7 @@ uwsgi = "*"
 "boto3" = "*"
 ipython = "*"
 django-storages = "*"
+pillow = "*"
 
 [dev-packages]
 awsebcli = "*"
