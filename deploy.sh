@@ -3,6 +3,9 @@
 # requirements.txt 를 생성
 pipenv lock --requirements > requirements.txt
 
+# 수정한 내용 반영
+git add -A
+
 # secrets 디렉토리, requirements.txt를 staging 상태로 변환
 git add -f .secrets/ requirements.txt
 
