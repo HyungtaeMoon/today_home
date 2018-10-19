@@ -20,6 +20,15 @@ secrets = json.load(open(os.path.join(SECRETS_DIR, 'base.json')))
 
 AUTH_USER_MODEL = 'members.User'
 
+# superuser
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWORD = 'pbkdf2_sha256$120000$78juPOAIQfg2$qe+CSJva7UQqullqFbWK3a94GBsSVQDnThTqmnyVEyU='
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'members.backends.SettingsBackend',
+]
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets['SECRET_KEY']
 
@@ -30,6 +39,7 @@ STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+
 
 # Application definition
 
