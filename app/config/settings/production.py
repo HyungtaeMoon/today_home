@@ -35,6 +35,7 @@ AWS_S3_SIGNATURE_VERSION = secrets['AWS_S3_SIGNATURE_VERSION']
 
 # AWS
 DEFAULT_FILE_STORAGE = 'config.storages.S3DefaultStorage'
+STATICFILES_STORAGE = 'config.storages.S3StaticStorage'
 AWS_STORAGE_BUCKET_NAME = secrets['AWS_STORAGE_BUCKET_NAME']
 
 # Log
