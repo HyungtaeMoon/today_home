@@ -1,4 +1,4 @@
-FROM            eb-docker:base
+FROM            eb-today-home:base
 MAINTAINER      blessmht@gmail.com
 
 ENV             BUILD_MODE              production

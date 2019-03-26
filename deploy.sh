@@ -10,7 +10,7 @@ git add -A
 git add -f .secrets/ requirements.txt
 
 # staged 상태로 eb 배포
-eb deploy --profile eb-deploy-project --staged
+eb deploy --profile eb-today-home --staged
 
 # git에서 secrets, requirements.txt 를 reset
 git reset HEAD .secrets/ requirements.txt
