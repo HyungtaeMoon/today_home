@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div><h4>오늘의 추천</h4></div>
+                <br>
+                <div><h4>카테고리</h4></div>
+                <ul class="list-group list-group-flush">
+                    <form action="" method="POST">
+                        <br>
+                        <br>
+                        {% for category in category_list %}
+                            <a href=""><li class="list-group-item">{{ category.name }}</li></a>
+                        {% endfor %}
+                    </form>
+                </ul>
+                <div><h4>인기 키워드</h4></div>
+                <br>
+                <div><h4>인기 상품</h4></div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

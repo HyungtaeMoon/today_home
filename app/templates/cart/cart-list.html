@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mx-auto">
+            <div class="col-9">
+                <h3>장바구니</h3>
+                <form action="" method="POST">
+                {% if cart_item %}
+                    {% for cart in cart_item %}
+                        <table class="table table-border table-hover">
+                            <tr>
+                                <td><img src="{{ cart.product.image.url }}" style="width: 80px; height: 120px;" alt=""></td>
+                                <td>상품명: {{ cart.product.name }}</td>
+                                <td>상품가격: {{ cart.product.price | intcomma }}</td>
+                            </tr>
+                        </table>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="col-3">
+                {% for cart in cart_item %}
+                    <table class="table table-border">
+                        <tr>
+                            <td>총 상품금액</td>
+                            <td>결제 금액</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{{ cart.total_price }}</td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn btn-outline-primary">선택삭제</button></td>
+                            <td><button class="btn btn-outline-success">구매하기</button></td>
+                        </tr>
+                    </table>
+                {% endfor %}
+            {% else %}
+                    <br>
+                    <table class="table table-active">
+                        <tr>
+                            <td><b>{{ user }}</b> 님은 현재 구매 목록이 없습니다. 지금
+                                <a href="{% url 'product:category-list' %}">
+                                    여기
+                                </a> 를 클릭해서 원하시는 상품을 구매하세요.
+                            </td>
+                        </tr>
+                    </table>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

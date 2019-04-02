@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+        <!-- 2 columns card -->
+        <div class="row">
+
+            <div class="col-lg-2">
+                <ul class="list-group list-group-flush">
+                    <form action="" method="POST">
+                        <br>
+                        <br>
+                        {% for category in category_list %}
+                            <a href="{% url 'product:category-detail' category.pk %}"><li class="list-group-item list-group-item-action">{{ category.name }}</li></a>
+                        {% endfor %}
+                    </form>
+                </ul>
+            </div>
+
+            <!-- 상품 페이지 -->
+
+            <div class="col-lg-10 row-divided">
+
+                <!-- 현재 페이지의 경로 -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb purple lighten-4">
+                        <li class="breadcrumb-item"><a class="black-text" href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a class="black-text" href="#">상위 카테고리</a></li>
+                        <li class="breadcrumb-item active">현재 카테고리</li>
+                    </ol>
+                </nav>
+                <!-- /현재 페이지의 경로 -->
+
+                <!-- 상품 페이지 -->
+
+                <div class="card-deck mx-auto">
+                    {% for product in product_list %}
+                        <div class="col-4">
+                            <div class="card-img text-center">
+                                <a class="" href="{% url "product:product-detail" product.pk %}">
+                                    <img src="{{ product.image.url }}" style="width: 220px; height: 220px;">
+                                </a>
+                                <div class="card-title">
+                                    <small class="text-muted">{{ product.company }}</small>
+                                    <p class="">{{ product.name }}</p>
+                                </div>
+                                <div class="card-subtitle">
+                                    <p class="">{{ product.price|intcomma }}원</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- /상품 페이지 -->
+
+            </div>
+
+        </div>
+
+        <!--/card-block-->
+
+        <!-- /2 columns card -->
+    </div>
+
+{% endblock %}

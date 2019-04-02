@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="POST">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    {% csrf_token %}
+                    <h3>회원정보 수정</h3>
+
+                    {{ form.as_p }}
+
+                    <button type="submit" class="btn btn-primary form-control">회원정보 수정</button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

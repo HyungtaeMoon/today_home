@@ -1,0 +1,95 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>프로젝트</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}">
+
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#"><h2>오늘의 집</h2></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto text-justify">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">커뮤니티</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'product:category-list' %}">스토어</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">전문가</a>
+                </li>
+
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="{% url 'product:search' %}">
+                <input name="q" value="{{ q }}" class="form-control mr-sm-2" type="text" placeholder="검색" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </form>
+            <ul class="navbar navbar-nav mx-auto">
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'product:my-cart' %}">
+                            <i class="fas fa-cart-arrow-down"></i><small>장바구니</small>
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">알림</a>
+                    </li>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            나의 정보
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'product:main-total-list' %}">마이홈</a>
+                            <a class="dropdown-item" href="">나의쇼핑</a>
+                            <a class="dropdown-item" href="{% url 'members:logout' %}">로그아웃</a>
+                        </div>
+                    </div>
+
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link btn btn-outline-primary my_button" href="#">글쓰기</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'members:login' %}">로그인<i class="fas fa-sign-in-alt"></i></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">|</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'members:signup' %}">회원가입</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<script src="{% static 'js/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<div class="container">
+    <hr />
+
+    <footer>
+        <p>2019 &copy; <a href="#" target=_blank">프로젝트</a></p>
+    </footer>
+</div>
+</body>
+</html>

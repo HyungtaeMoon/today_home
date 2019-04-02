@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th><img src="{{ product.image.url }}" alt="" style="width: 70%; height: 70%;"></th>
+                            <th>
+                                <h4>{{ product.name }}</h4>
+                                <br>
+                                <h4>{{ product.price|intcomma }}원</h4>
+                                <br>
+                                <a class="btn btn-primary" href="{% url 'product:add-cart' product.pk %}"><h4>장바구니 담기 + </h4></a>
+                            </th>
+                    </table>
+                </div>
+                <table class="table table-border table-hover">
+                    <tr>
+                        <th>상품정보</th>
+                        <th>추천</th>
+                        <th>리뷰</th>
+                        <th>문의</th>
+                    </tr>
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </table>
+                <hr>
+                {% include 'product/comment.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

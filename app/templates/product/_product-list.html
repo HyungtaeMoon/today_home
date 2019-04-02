@@ -1,0 +1,25 @@
+{% load humanize %}
+<div class="card-deck mx-auto">
+    {% if category_detail %}
+        {% for product in product_list %}
+            <div class="col-4">
+                <div class="card-img text-center">
+                    <a class="" href="{% url "product:product-detail" product.pk %}">
+                        <img src="{{ product.image.url }}" style="width: 220px; height: 220px;">
+                    </a>
+                    <div class="card-title">
+                        <small class="text-muted">{{ product.company }}</small>
+                        <p class="">{{ product.name }}</p>
+                    </div>
+                    <div class="card-subtitle">
+                        <p class="">{{ product.price|intcomma }}원</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <br>
+        <br>
+        <h2>상품이 아직 준비되어 있지 않습니다.</h2>
+    {% endif %}
+</div>

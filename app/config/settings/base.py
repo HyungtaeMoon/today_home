@@ -34,24 +34,40 @@ SECRET_KEY = secrets['SECRET_KEY']
 
 # Static
 STATIC_URL = '/static/'
+# collectstatic 을 하면 모이게 되는 루트 경로
 STATIC_ROOT = os.path.join(ROOT_DIR, '.static')
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+# app 에 해당하는 static 파일 외에 STATIC_ROOT 에 포함하고 싶다면 STATICFILES_DIRS 에 설정
+# 튜플 또는 리스트 형식으로 지정
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
 
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
 
+# Template DIR
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+# login_required
+LOGIN_URL = 'members:login'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'members',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'members',
+    'product',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +85,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            TEMPLATES_DIR,
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,4 +132,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-

@@ -11,6 +11,7 @@ uwsgi = "*"
 ipython = "*"
 django-storages = "*"
 pillow = "*"
+django-crispy-forms = "*"
 
 [dev-packages]
 awsebcli = "*"

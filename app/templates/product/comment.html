@@ -1,0 +1,37 @@
+<div class="container">
+    <a class="btn btn-outline-primary" href="#">베스트순</a>
+    <a class="btn btn-outline-secondary" href="#">촤신순</a>
+    <a class="btn btn-outline-secondary" href="#">낮은 평점순</a>
+
+    <a class="btn btn-outline-info" href="{% url 'product:comment-create' product.pk %}" style="width: 250px">+ 리뷰 남기기<small> 최대 250포인트</small></a>
+
+</div>
+<br>
+{% if comment_list %}
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for comment in comment_list %}
+                <div class="col-md-7 col-md-offset-5">
+                    <div class="media">
+                        <div class="media-body">
+                            <h5 class="media-heading">{{ comment.product.name }}</h5>
+                            <span class="text-muted">{{ comment.user }} | {{ comment.updated_at }} | 오늘의집 구매</span>
+                            <p>{{ comment.content }}</p>
+                            <a href="{% url 'product:comment-delete' product.id comment.id %}"
+                               class="btn btn-outline-danger">댓글 삭제하기
+                            </a>
+                        </div>
+                        <div class="media-right">
+                            <img src="{{ comment.image.url }}" class="media-object" style="width:70px; height: 70px;">
+                        </div>
+                    </div>
+                    <hr class="custom-hr">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+
+{% else %}
+    <div class="text-center"><b>상품 후기가 없어요. 상품 후기를 적어주세요!! :-) </b></div>
+{% endif %}
