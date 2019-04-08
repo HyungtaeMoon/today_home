@@ -31,17 +31,14 @@ class SignupForm(forms.Form):
     )
     username = forms.CharField(
         label='사용자 아이디',
-        help_text='성함을 입력해주세요',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'palceholder': '아이디 입력'
             }
         )
     )
     email = forms.CharField(
         label='이메일',
-        help_text='이메일을 입력해주세요',
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
