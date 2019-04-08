@@ -97,8 +97,9 @@ def comment_create(request, product_pk):
             comment = form.save(commit=False)
             comment.user = request.user
             comment.content = form.cleaned_data['content']
-            comment.product = product
+            comment.rating = form.cleaned_data['rating']
             comment.image = form.cleaned_data['image']
+            comment.product = product
             form.save()
             return redirect('product:product-detail', product.pk)
     else:

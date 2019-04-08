@@ -68,10 +68,18 @@ class CartItem(models.Model):
 
 
 class Comment(models.Model):
+    RATING_CHOICES = (
+        (1, '재구매 의사 없어요(1점)'),
+        (2, '별로에요(2점)'),
+        (3, '나쁘지 않아요(3점)'),
+        (4, '구매 의사 있어요(4점)'),
+        (5, '주변 사람에게 추천해요(5점)')
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=250)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='comment-img')
+    rating = models.IntegerField(choices=RATING_CHOICES, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

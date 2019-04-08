@@ -16,7 +16,7 @@
                         <div class="media-body">
                             <h5 class="media-heading">{{ comment.product.name }}</h5>
                             <span class="text-muted">{{ comment.user }} | {{ comment.updated_at }} | 오늘의집 구매</span>
-                            <p>{{ comment.content }}</p>
+                            <p>{{ comment.content }} | 별점: {{ comment.rating }}</p>
                             <a href="{% url 'product:comment-delete' product.id comment.id %}"
                                class="btn btn-outline-danger">댓글 삭제하기
                             </a>
