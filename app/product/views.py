@@ -53,9 +53,14 @@ def product_detail(request, product_pk):
 @login_required
 def my_cart(request):
     cart_item = CartItem.objects.filter(user_id=request.user.pk)
+    # 장바구니에 담긴 상품의 총 합계 가격
+    total_price = 0
+    for each_total in cart_item:
+        total_price += each_total.product.price
     if cart_item is not None:
         context = {
             'cart_item': cart_item,
+            'total_price': total_price,
         }
         return render(request, 'cart/cart-list.html', context)
     return redirect('product:my-cart')
