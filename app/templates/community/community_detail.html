@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+        <div class="row">
+            <div class="col-7">
+                <div class="text-info">질문과 답변</div>
+                <div><h4><b>{{ community_detail }}</b></h4></div>
+                <br>
+                <div>{{ community_detail.content }}</div>
+                <br>
+                <img src="{{ community_detail.image.url }}" style="height: 300px; width: 280px;" alt="">
+                <br>
+                <div><small>{{ community_detail.created_at }}</small></div>
+                <hr>
+                <h4>답글</h4>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

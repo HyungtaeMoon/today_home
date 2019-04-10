@@ -6,4 +6,5 @@ app_name = 'community'
 
 urlpatterns = [
     path('', views.community_notice_list, name='notice'),
+    path('detail/<int:community_pk>/', views.community_detail, name='detail'),
 ]

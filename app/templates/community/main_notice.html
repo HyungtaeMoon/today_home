@@ -19,7 +19,7 @@
         <div class="row justify-content-center">
             {% for community in community_list %}
                 <div class="col-6 text-left">
-                    <div><b><a href="">{{ community.title }}</a></b></div>
+                    <div><b><a href="{% url 'community:detail' community.pk %}">{{ community.title }}</a></b></div>
                     <div>{{ community.content }}</div>
                     <div><small>{{ community.user }} | {{ community.created_at }}</small></div>
                 </div>
