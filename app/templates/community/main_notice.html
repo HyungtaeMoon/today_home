@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container mx-auto">
+        <div class="row justify-content-center">
+            <div><h3>질문하기</h3></div>
+        </div>
+        <br>
+        <div class="container mx-auto">
+            <div class="row col-10 justify-content-end">
+                <button class="btn btn-primary">질문하기</button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="container mx-auto">
+        <div class="row justify-content-center">
+            {% for community in community_list %}
+                <div class="col-6 text-left">
+                    <div><b><a href="">{{ community.title }}</a></b></div>
+                    <div>{{ community.content }}</div>
+                    <div><small>{{ community.user }} | {{ community.created_at }}</small></div>
+                </div>
+                <div class="col-2 d-flex align-items-center">
+                    <img src="{{ community.image.url }}" style="height: 70px; width: 70px;" alt="">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
