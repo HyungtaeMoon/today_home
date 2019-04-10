@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from .models import Community
+from .models import Community, CommentCommunity
 
 
 def community_notice_list(request):
@@ -13,8 +13,9 @@ def community_notice_list(request):
 
 def community_detail(request, community_pk):
     community_detail = Community.objects.get(pk=community_pk)
+    comment_list = CommentCommunity.objects.filter(community_id=community_detail.pk)
     context = {
         'community_detail': community_detail,
+        'comment_list': comment_list,
     }
-    print(context)
     return render(request, 'community/community_detail.html', context)

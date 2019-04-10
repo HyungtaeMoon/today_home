@@ -15,6 +15,19 @@
                 <div><small>{{ community_detail.created_at }}</small></div>
                 <hr>
                 <h4>답글</h4>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="">의견을 남겨보세요</label>
+                        <textarea class="form-control" name="" id="" cols="30" rows="2"></textarea>
+                    </div>
+                    <button class="btn btn-sm btn-outline-info float-right">댓글 남기기</button>
+                </form>
+                <br>
+                {% for comment in comment_list %}
+                    <div><b>{{ comment.user }}</b></div>
+                    <div>{{ comment.content }}</div>
+                    <div>{{ comment.created_at }} | <a href="">&#9825;좋아요({{ comment.like }})</a></div>
+                {% endfor %}
             </div>
         </div>
     </div>
