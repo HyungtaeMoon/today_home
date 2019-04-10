@@ -60,7 +60,7 @@ class CartItem(models.Model):
         verbose_name = '장바구니'
         verbose_name_plural = '장바구니 리스트'
 
-    def total_price(self):
+    def sub_total(self):
         return self.product.price * self.quantity
 
     def __str__(self):
