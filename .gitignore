@@ -7,7 +7,7 @@
 # Django Static files path
 /.static
 /.media
-static
+#static
 
 ### Django ###
 *.log
