@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <br>
+                <div>
+                    <h3>질문하기</h3>
+                </div>
+                <br>
+                <div>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-outline-info" type="submit">질문 등록하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
