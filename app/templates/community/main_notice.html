@@ -2,32 +2,57 @@
 
 {% block content %}
 
-    <div class="container mx-auto">
+    <div class="container mx-auto p-5 mb-2" style="background-color: #F4F6F6;">
         <div class="row justify-content-center">
-            <div><h3>질문하기</h3></div>
+            <h3>질문과 답변</h3>
+        </div>
+        <div class="text-center">
+            <small>오늘의집 인테리어 고수들과 전문가들에게 조언을 받으세요.</small>
         </div>
         <br>
-        <div class="container mx-auto">
-            <div class="row col-10 justify-content-end">
-                <button class="btn btn-primary">질문하기</button>
+
+        <form class="card card-sm">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <i class="fas fa-search h5 text-body"></i>
+                </div>
+                <!--end of col-->
+                <div class="col">
+                    <input class="form-control form-control-borderless" type="search" placeholder="궁금한 것을 검색해보세요(미구현)">
+                </div>
+                <!--end of col-->
+                <div class="col-auto">
+                    <button class="btn btn btn-success" type="submit">Search</button>
+                </div>
+                <!--end of col-->
             </div>
+        </form>
+    </div>
+    <br>
+    <div class="container mx-auto">
+        <div class="row">
+            <div class="col-9">
+                <div class="text-right"><a href="{% url 'community:notice-create' %}"><button class="btn btn-outline-info">질문하기</button></a></div>
+            </div>
+
         </div>
     </div>
     <br>
-
-    <div class="container mx-auto">
-        <div class="row justify-content-center">
-            {% for community in community_list %}
+    <br>
+    {% for community in community_list %}
+        <div class="container mx-auto">
+            <div class="row justify-content-center">
                 <div class="col-6 text-left">
+                    <hr>
                     <div><b><a href="{% url 'community:detail' community.pk %}">{{ community.title }}</a></b></div>
-                    <div>{{ community.content }}</div>
+                    <div>{{ community.content|truncatechars:100 }}</div>
                     <div><small>{{ community.user }} | {{ community.created_at }}</small></div>
                 </div>
                 <div class="col-2 d-flex align-items-center">
                     <img src="{{ community.image.url }}" style="height: 70px; width: 70px;" alt="">
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    {% endfor %}
 
 {% endblock %}
