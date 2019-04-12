@@ -57,27 +57,26 @@ def logout_view(request):
 
 
 def signup_view(request):
+    """UserCreationForm 을 사용"""
     if request.method == 'POST':
-        # form 을 채우고 POST 요청을 보냈을 때 이 구간이 실행됨
-        #   form 에 POST 가 바인드 됨(request 의 POST 정보가 들어옴)
-        #   form 의 바인드 된 인스턴스를 request.POST 를 사용하여 form 으로 인스턴스화
         form = SignupForm(request.POST, request.FILES)
-
-        # form 에 대한 정보가 설정한 필드의 조건에 맞다면(True),
-        #   예를들면 이메일 필드에 이메일 주소로 입력을 했다면 통과
         if form.is_valid():
-            # Signupform 에 정의되어 있는 signup 메서드를 호출
-            user = form.signup()
-            # 세션값을 만들어 DB 에 저장, 쿠키에 해당값을 담아 보냄
+            form.save()
+            username = form.cleaned_data['username']
+            # email = form.cleaned_data['email']
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
+            # alias = form.cleaned_data['alias']
+            # gender = form.cleaned_data['gender']
+            # profile_img = form.cleaned_data['profile_img']
+            # cover_img = form.cleaned_data['cover_img']
+            # introduce = form.cleaned_data['introduce']
+            user = authenticate(request, username=username, password=password1)
             login(request, user)
             return redirect('product:category-list')
 
     else:
-        # GET 요청(회원가입 버튼 클릭, url 직접 접근) 등은
-        #   비어있는 SignupForm 을 생성
         form = SignupForm()
-    # POST 요청으로 채워진 폼도 아래의 context 에 채워지고,
-    #   GET 요청으로 온 폼도 아래의 context(빈 form) 으로 채워 렌더링
     context = {
         'form': form,
     }
