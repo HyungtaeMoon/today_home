@@ -1,6 +1,6 @@
 {% load humanize %}
 <div class="card-deck mx-auto">
-    {% if category_detail %}
+    {% if product_list %}
         {% for product in product_list %}
             <div class="col-4">
                 <div class="card-img text-center">
@@ -18,8 +18,12 @@
             </div>
         {% endfor %}
     {% else %}
-        <br>
-        <br>
-        <h2>상품이 아직 준비되어 있지 않습니다.</h2>
+        <div class="container">
+            <div class="text-center">
+                <br>
+                <br>
+                <h3>상품이 아직 준비되어 있지 않습니다. :-)</h3>
+            </div>
+        </div>
     {% endif %}
 </div>
