@@ -7,9 +7,10 @@ User = get_user_model()
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        label='사용자 아이디',
+        label='아이디',
         widget=forms.TextInput(
             attrs={
+                'placeholder': '아이디',
                 'class': 'form-control',
             }
         )
@@ -18,6 +19,7 @@ class LoginForm(forms.Form):
         label='비밀번호',
         widget=forms.PasswordInput(
             attrs={
+                'placeholder': '비밀번호',
                 'class': 'form-control',
             }
         )
