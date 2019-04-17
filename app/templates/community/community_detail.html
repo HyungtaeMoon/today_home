@@ -16,19 +16,20 @@
                 <hr>
                 <h4>답글</h4>
 
-                <a href="{% url 'community:comment-create' community_pk=community_detail.pk %}" class="btn btn-outline-secondary">댓글 남기기</a>
+{#                <a href="{% url 'community:comment-create' community_pk=community_detail.pk %}" class="btn btn-outline-secondary">댓글 남기기</a>#}
 
-                {#                <form method="POST" action="{% url 'community:comment-create' community_detail.pk %}">#}
-                {#                    {% csrf_token %}#}
-                {#                    {{ form.as_p }}#}
-                {#                    <button class="btn btn-sm btn-outline-info float-right" type="submit">댓글 남기기</button>#}
-                {#                </form>#}
+                <form method="POST" action="{% url 'community:comment-create' community_detail.pk %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form }}
+                    <button class="btn btn-sm btn-outline-info float-right" type="submit">댓글 남기기</button>
+                </form>
 
                 <br>
                 {% for comment in comment_list %}
                     <div><b>{{ comment.user }}</b></div>
                     <div>{{ comment.content }}</div>
                     <div>{{ comment.created_at }} | <a href="">&#9825;좋아요({{ comment.like }})</a></div>
+                    <br>
                 {% endfor %}
             </div>
         </div>
