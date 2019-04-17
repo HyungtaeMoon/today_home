@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
 from django.views.generic import CreateView
 
@@ -27,6 +28,7 @@ def community_detail(request, community_pk):
     return render(request, 'community/community_detail.html', context)
 
 
+@login_required
 def community_create(request):
     if request.method == 'POST':
         user = User.objects.get(pk=request.user.id)
@@ -68,7 +70,7 @@ def community_create(request):
 #         }
 #         return render(request, 'community/community_detail.html', context)
 
-
+@login_required
 def comment_create(request, community_pk):
     if request.method == 'POST':
         community = Community.objects.get(pk=community_pk)
