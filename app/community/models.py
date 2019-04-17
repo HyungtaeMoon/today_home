@@ -20,6 +20,7 @@ class CommentCommunity(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     community = models.ForeignKey(Community, on_delete=models.CASCADE)
     content = models.TextField()
+    image = models.ImageField(upload_to='community', null=True)
     like = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

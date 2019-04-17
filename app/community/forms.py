@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Community
+from .models import Community, CommentCommunity
 
 
 class CommunityCreateForm(forms.ModelForm):
@@ -35,3 +35,47 @@ class CommunityCreateForm(forms.ModelForm):
                 }
             ),
         }
+
+
+class CommentCreateForm(forms.ModelForm):
+    class Meta:
+        model = CommentCommunity
+        fields = [
+            'content',
+            'image',
+        ]
+        widgets = {
+            'content': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'image': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+        }
+
+# class CommentCreateForm(forms.Form):
+#     content = forms.CharField(
+#         widget=forms.Textarea(
+#             attrs={
+#                 'class': 'form-control',
+#                 'row': 3,
+#             }
+#         )
+#     ),
+#
+#     # def save(self, community, **kwargs):
+#     #     content = self.cleaned_data['content']
+#     #     return community.comments.create(
+#     #         content=content,
+#     #         **kwargs,
+#     #     )
+#
+#     def clean(self):
+#         cleaned_data = super(CommentCreateForm, self).clean()
+#         content = cleaned_data.get('content')
+#         if not content:
+#             raise forms.ValidationError('You have to write something!')

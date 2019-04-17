@@ -1,11 +1,13 @@
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, resolve_url
+from django.views.generic import CreateView
 
 from .models import Community, CommentCommunity
-from .forms import CommunityCreateForm
+from .forms import CommunityCreateForm, CommentCreateForm
 
 
 User = get_user_model()
+
 
 def community_notice_list(request):
     community_list = Community.objects.all()
@@ -46,3 +48,44 @@ def community_create(request):
             'form': form,
         }
         return render(request, 'community/notice-create.html', context)
+
+
+# def comment_create(request, community_pk):
+#     if request.method == 'POST':
+#         community = Community.objects.get(pk=community_pk)
+#         form = CommentCreateForm(request.POST)
+#         if form.is_valid():
+#             comment = form.save(commit=False)
+#             comment.community = community
+#             comment.author = request.user
+#             comment.save()
+#             return redirect('community:detail')
+#
+#     else:
+#         form = CommentCreateForm()
+#         context = {
+#             'form': form,
+#         }
+#         return render(request, 'community/community_detail.html', context)
+
+
+def comment_create(request, community_pk):
+    if request.method == 'POST':
+        community = Community.objects.get(pk=community_pk)
+        # community = CommentCommunity.objects.get(community_id=community_pk)
+
+        form = CommentCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.community = community
+            comment.content = form.cleaned_data['content']
+            comment.image = form.cleaned_data['image']
+            form.save()
+            return redirect('community:detail', community.pk)
+
+    form = CommentCreateForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'community/comment-create.html', context)

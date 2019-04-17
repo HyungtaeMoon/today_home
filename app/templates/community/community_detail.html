@@ -15,13 +15,15 @@
                 <div><small>{{ community_detail.created_at }}</small></div>
                 <hr>
                 <h4>답글</h4>
-                <form action="" method="POST">
-                    <div class="form-group">
-                        <label for="">의견을 남겨보세요</label>
-                        <textarea class="form-control" name="" id="" cols="30" rows="2"></textarea>
-                    </div>
-                    <button class="btn btn-sm btn-outline-info float-right">댓글 남기기</button>
-                </form>
+
+                <a href="{% url 'community:comment-create' community_pk=community_detail.pk %}" class="btn btn-outline-secondary">댓글 남기기</a>
+
+                {#                <form method="POST" action="{% url 'community:comment-create' community_detail.pk %}">#}
+                {#                    {% csrf_token %}#}
+                {#                    {{ form.as_p }}#}
+                {#                    <button class="btn btn-sm btn-outline-info float-right" type="submit">댓글 남기기</button>#}
+                {#                </form>#}
+
                 <br>
                 {% for comment in comment_list %}
                     <div><b>{{ comment.user }}</b></div>
