@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404, resolve_url
-from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView
 
 from .models import Community, CommentCommunity
 from .forms import CommunityCreateForm, CommentCreateForm
@@ -50,6 +51,22 @@ def community_create(request):
             'form': form,
         }
         return render(request, 'community/notice-create.html', context)
+
+
+class CommunityDeleteView(DeleteView):
+    model = Community
+
+    success_url = reverse_lazy('community:notice')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        if self.object.user == self.request.user:
+            return redirect('community:notice')
+        return redirect('community:notice')
+
+
+community_delete = CommunityDeleteView.as_view()
 
 
 # def comment_create(request, community_pk):
