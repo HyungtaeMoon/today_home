@@ -30,9 +30,9 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST, request.FILES)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, email=email, password=password)
             # 유저가 authenticate 검증에 통과할 경우,
             if user is not None:
                 # 세션값을 만들어 DB 에 저장, 쿠키에 해당값을 담아 보내는 로그인 함수로 로그인
@@ -62,16 +62,16 @@ def signup_view(request):
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['username']
-            # email = form.cleaned_data['email']
+            email = form.cleaned_data['email']
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
+            # name = form.cleaned_data['name']
             # alias = form.cleaned_data['alias']
             # gender = form.cleaned_data['gender']
             # profile_img = form.cleaned_data['profile_img']
             # cover_img = form.cleaned_data['cover_img']
             # introduce = form.cleaned_data['introduce']
-            user = authenticate(request, username=username, password=password1)
+            user = authenticate(request, email=email, password=password1)
             login(request, user)
             return redirect('product:category-list')
 
