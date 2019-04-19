@@ -2,27 +2,129 @@
 {% load humanize %}
 
 {% block content %}
+    <br>
+    <br>
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-
-                <div><h4>오늘의 추천</h4></div>
-                <br>
-                <div><h4>카테고리</h4></div>
-                <ul class="list-group list-group-flush">
-                    <form action="" method="POST">
-                        <br>
-                        <br>
-                        {% for category in category_list %}
-                            <a href=""><li class="list-group-item">{{ category.name }}</li></a>
-                        {% endfor %}
-                    </form>
-                </ul>
-                <div><h4>인기 키워드</h4></div>
-                <br>
-                <div><h4>인기 상품</h4></div>
-
-            </div>
+            <div class="mx-auto"><h4>카테고리</h4></div>
         </div>
     </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-sm-2">
+                    <div class="card text-center border-0">
+                        <a href="#"><img class="card-img-top img-fluid" style="width: 80px; height: 80px;" src="{{ category.image.url }}" alt="Card image cap"></a>
+                        <div class="card-block">
+                            <p class="card-title">{{ category.name }}</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto"><h4>인기상품</h4></div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-sm-3">
+                    <div class="card border-0">
+                        <a href="#">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="Card image cap"></a>
+                        <div class="card-block">
+                            <br>
+                            <p class="card-title"><small class="text-muted">{{ product.company.name }}</small></p>
+                            <small class="card-title"><b>{{ product.name }}</b></small>
+                            <p class="card-text">{{ product.price | intcomma }} 원</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {#    <div class="container">#}
+    {#        <div class="row">#}
+    {#            <div class="col-3 mx-auto"><h4>인기상품</h4></div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="container">#}
+    {#        <div class="row">#}
+    {#            {% for product in products %}#}
+    {#                <div class="col-3 col-md-3">#}
+    {#                    <div class="card card-block h-100 justify-content-center">#}
+    {##}
+    {#                        <h3>{{ product.name }}</h3>#}
+    {#                        <p>Some content here</p>#}
+    {#                        <code>.card.h-10.justify-content-center</code>#}
+    {##}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            {% endfor %}#}
+    {##}
+    {#            <br>#}
+    {#            <br>#}
+    {##}
+    {#            <div class="container">#}
+    {#                <div class="row">#}
+    {#                    <div class="col-3 mx-auto"><h4>카테고리</h4></div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="container">#}
+    {#                <div class="row">#}
+    {#                    <div class="col">#}
+    {#                        <div class="card card-block h-100 justify-content-center">#}
+    {#                            <h3>Card</h3>#}
+    {#                            <p>Some content here</p>#}
+    {#                            <code>.card.h-10.justify-content-center</code>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="col">#}
+    {#                        <div class="card card-block h-100 justify-content-center">#}
+    {#                            <h3>Card</h3>#}
+    {#                            <p>Some content here, and there and more here and then some more.</p>#}
+    {#                            <code>.card.h-10.justify-content-center</code>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                    <div class="col">#}
+    {#                        <div class="card card-block h-100 justify-content-center">#}
+    {#                            <h3>Card</h3>#}
+    {#                            <code>.card.h-10.justify-content-center</code>#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {##}
+    {#            <br>#}
+    {#            <br>#}
+
+
+    {#            <div class="col">#}
+    {#                <div class="card card-block h-100 justify-content-center">#}
+    {#                    <h3>Card</h3>#}
+    {#                    <p>Some content here, and there and more here and then some more.</p>#}
+    {#                    <code>.card.h-10.justify-content-center</code>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#            <div class="col">#}
+    {#                <div class="card card-block h-100 justify-content-center">#}
+    {#                    <h3>Card</h3>#}
+    {#                    <code>.card.h-10.justify-content-center</code>#}
+    {#                </div>#}
+    {#            </div>#}
+    </div>
+    </div>
+
+
 {% endblock %}

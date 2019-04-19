@@ -12,8 +12,10 @@ User = get_user_model()
 def main_total_list(request):
     """메인 페이지로 추후 product-list 외에 다른 모델도 추가 예정"""
     products = Product.objects.all()
+    categories = Category.objects.all()
     context = {
         'products': products,
+        'categories': categories,
     }
     return render(request, 'product/total-list.html', context)
 
