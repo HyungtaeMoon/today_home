@@ -44,7 +44,7 @@
             <div class="row justify-content-center">
                 <div class="col-6 text-left">
                     <hr>
-                    <div><b><a href="{% url 'community:detail' community.pk %}">{{ community.title }}</a></b></div>
+                    <div><b><a href="{% url 'community:question-detail' community.pk %}">{{ community.title }}</a></b></div>
                     <div>{{ community.content|truncatechars:100 }}</div>
                     <div><small>{{ community.user }} | {{ community.created_at }}</small></div>
                 </div>
