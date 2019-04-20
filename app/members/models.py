@@ -51,3 +51,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     # USERNAME 을 email 로 사용
     USERNAME_FIELD = 'email'
+
+    class Meta:
+        verbose_name = '사용자'
+        verbose_name_plural = f'{verbose_name} 목록'
+        ordering = ['-pk']

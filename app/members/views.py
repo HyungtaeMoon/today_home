@@ -37,7 +37,7 @@ def login_view(request):
             if user is not None:
                 # 세션값을 만들어 DB 에 저장, 쿠키에 해당값을 담아 보내는 로그인 함수로 로그인
                 login(request, user)
-                return redirect('product:category-list')
+                return redirect('product:main-total-list')
             else:
                 return redirect('members:login')
     else:
