@@ -10,8 +10,9 @@ class Company(models.Model):
     image = models.ImageField(upload_to='company', blank=True)
 
     class Meta:
-        verbose_name = '회사명'
-        verbose_name_plural = '회사 리스트'
+        verbose_name = '회사'
+        verbose_name_plural = f'{verbose_name} 목록'
+        ordering = ['-pk']
 
     def __str__(self):
         return self.name
@@ -24,7 +25,8 @@ class Category(models.Model):
 
     class Meta:
         verbose_name = '카테고리'
-        verbose_name_plural = '모든 상품 카테고리'
+        verbose_name_plural = f'{verbose_name} 목록'
+        # ordering = ['-pk']
 
     def __str__(self):
         return self.name
@@ -43,8 +45,9 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = '판매 상품'
-        verbose_name_plural = '상품 리스트'
+        verbose_name = '판매상품'
+        verbose_name_plural = f'{verbose_name} 목록'
+        ordering = ['-pk']
 
     def __str__(self):
         return self.name
@@ -58,7 +61,8 @@ class CartItem(models.Model):
 
     class Meta:
         verbose_name = '장바구니'
-        verbose_name_plural = '장바구니 리스트'
+        verbose_name_plural = f'{verbose_name} 목록'
+        ordering = ['-pk']
 
     def sub_total(self):
         return self.product.price * self.quantity
@@ -85,7 +89,8 @@ class Comment(models.Model):
 
     class Meta:
         verbose_name = '댓글'
-        verbose_name_plural = '댓글 리스트'
+        verbose_name_plural = f'{verbose_name} 목록'
+        ordering = ['-pk']
 
     def __str__(self):
         return self.product
