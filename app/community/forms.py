@@ -1,11 +1,11 @@
 from django import forms
 
-from .models import Community, CommentCommunity
+from .models import Question, CommentQuestion
 
 
-class CommunityCreateForm(forms.ModelForm):
+class QuestionCreateForm(forms.ModelForm):
     class Meta:
-        model = Community
+        model = Question
         fields = [
             'title',
             'content',
@@ -39,7 +39,7 @@ class CommunityCreateForm(forms.ModelForm):
 
 class CommentCreateForm(forms.ModelForm):
     class Meta:
-        model = CommentCommunity
+        model = CommentQuestion
         fields = [
             'content',
             'image',

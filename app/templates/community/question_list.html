@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{# 이 템플릿은 적용되지 않습니다.#}
+
+
 {% block content %}
 
     <div class="container mx-auto p-5 mb-2" style="background-color: #F4F6F6;">
@@ -39,7 +42,7 @@
     </div>
     <br>
     <br>
-    {% for question in questions %}
+    {% for question in questions_list %}
         <div class="container mx-auto">
             <div class="row justify-content-center">
                 <div class="col-6 text-left">
