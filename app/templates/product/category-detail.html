@@ -7,12 +7,12 @@
         <div class="row">
 
             <div class="col-lg-2">
-                <ul class="list-group list-group-flush">
+                <ul class="list-group-flush">
                     <form action="" method="POST">
                         <br>
                         <br>
                         {% for category in category_list %}
-                            <a href="{% url 'product:category-detail' category.pk %}"><li class="list-group-item list-group-item-action">{{ category.name }}</li></a>
+                            <a href="{% url 'product:category-detail' category.pk %}"><li class="list-group-item list-group-item-action"><b>{{ category.name }}</b></li></a>
                         {% endfor %}
                     </form>
                 </ul>
