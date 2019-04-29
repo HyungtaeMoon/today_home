@@ -3,7 +3,10 @@
     <a class="btn btn-outline-secondary" href="#">촤신순</a>
     <a class="btn btn-outline-secondary" href="#">낮은 평점순</a>
 
+    {% if request.user %}
     <a class="btn btn-outline-info" href="{% url 'product:comment-create' product.pk %}" style="width: 250px">+ 리뷰 남기기<small> 최대 250포인트</small></a>
+
+    {% endif %}
 
 </div>
 <br>
@@ -19,6 +22,9 @@
                             <p>{{ comment.content }} | 별점: {{ comment.rating }}</p>
                             <a href="{% url 'product:comment-delete' product.id comment.id %}"
                                class="btn btn-outline-danger">댓글 삭제하기
+                            </a>
+                            <a href="{% url 'product:comment-edit' product.pk comment.pk %}"
+                               class="btn btn-outline-success">댓글 수정하기
                             </a>
                         </div>
                         <div class="media-right">

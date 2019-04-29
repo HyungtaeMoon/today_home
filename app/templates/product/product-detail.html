@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="container">
+        <hr>
+
+        <div class="card border-0">
+            <div class="row">
+                <aside class="col-sm-5 border-0">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div> <a href="#"><img src="{{ product.image.url }}" style="width: 450px; height: 450px;"></a></div>
+                        </div> <!-- slider-product.// -->
+                        <div class="img-small-wrap">
+                            <div class="item-gallery"><img src="https://s9.postimg.org/tupxkvfj3/image.jpg" alt="서브 이미지1"> </div>
+                            <div class="item-gallery"><img src="https://s9.postimg.org/tupxkvfj3/image.jpg" alt="서브 이미지2"> </div>
+                        </div> <!-- slider-nav.// -->
+                    </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <aside class="col-sm-7">
+                    <article class="card-body p-5">
+                        <div><small>{{ product.company.name }}</small></div>
+                        <h3 class="title mb-3">{{ product.name }}</h3>
+
+                        <p class="price-detail-wrap">
+	<span class="price h3 text-warning">
+		<span class="num">{{ product.price | intcomma }} 원</span>
+	</span>
+                        </p> <!-- price-detail-wrap .// -->
+                        <dl class="item-property">
+                            <dt>상품설명</dt>
+                            <dd><p>{{ product.description }} </p></dd>
+                        </dl>
+                        <dl class="param param-feature">
+                            <dt>배송비</dt>
+                            <dd> 2500원 </dd>
+                        </dl>  <!-- item-property-hor .// -->
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <dl class="param param-inline">
+                                    <dt> 사이즈 </dt>
+                                    <dd>
+                                        <select class="form-control form-control-sm" style="width:70px;">
+                                            <option> 1 </option>
+                                            <option> 2 </option>
+                                            <option> 3 </option>
+                                        </select>
+                                    </dd>
+                                    <dt> 색상 </dt>
+                                    <dd>
+                                        <select class="form-control form-control-sm" style="width:70px;">
+                                            <option> 1 </option>
+                                            <option> 2 </option>
+                                            <option> 3 </option>
+                                        </select>
+                                    </dd>
+                                </dl>  <!-- item-property .// -->
+                                </dl>  <!-- item-property .// -->
+                            </div> <!-- col.// -->
+                        </div> <!-- row.// -->
+                        <hr>
+                        <a href="{% url 'product:add-cart' product.pk %}" class="btn btn-lg btn-outline-info"> <i class="fas fa-shopping-cart"></i> 장바구니 담기 </a>
+                        <a href="#" class="btn btn-lg btn-info"> 구매하기 </a>
+
+                    </article> <!-- card-body.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+
+
+    </div>
+    <!--container.//-->
+    <br>
+    {% include 'product/comment.html' %}
+
+{% endblock %}
