@@ -52,6 +52,31 @@ def question_create(request):
         }
         return render(request, 'community/question-create.html', context)
 
+# @login_required
+# def question_create(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         form = QuestionCreateForm(request.POST)
+#         file_form = FileModelForm(request.POST, request.FILES)
+#         files = request.FILES.getlist('image')
+#         if form.is_valid() and file_form.is_valid():
+#             question_instance = form.save(commit=False)
+#             question_instance.user = user
+#             question_instance.save()
+#             for f in files:
+#                 file_instance = QuestionFile(file=f, question=question_instance)
+#                 file_instance.save()
+#                 return redirect('community:questions')
+#     else:
+#         form = QuestionCreateForm()
+#         file_form = QuestionFile()
+#         context = {
+#             'form': form,
+#             'file_form': file_form,
+#         }
+#
+#         return render(request, 'community/question-create.html', context)
+
 
 class QuestionDeleteView(DeleteView):
     """질문 게시판 글 삭제"""

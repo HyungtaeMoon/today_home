@@ -9,7 +9,7 @@ class QuestionCreateForm(forms.ModelForm):
         fields = [
             'title',
             'content',
-            'image'
+            'image',
         ]
         labels = {
             'title': '제목',
@@ -33,7 +33,7 @@ class QuestionCreateForm(forms.ModelForm):
                 attrs={
                     'class': 'form-control',
                 }
-            ),
+            )
         }
 
 
