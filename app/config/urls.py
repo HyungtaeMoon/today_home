@@ -17,9 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # 최초 index 페이지를 상품 메인 페이지로 redirect 되도록 설정
+    path('', RedirectView.as_view(pattern_name='product:main-total-list'), name='index'),
     path('members/', include('members.urls')),
     path('product/', include('product.urls')),
     path('community/', include('community.urls')),
