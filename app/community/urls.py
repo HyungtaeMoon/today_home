@@ -14,6 +14,8 @@ urlpatterns = [
     path('question/<int:pk>/', views.question_detail, name='question-detail'),
     # 질문 게시판에 글 생성
     path('question/new/', views.question_create, name='question-create'),
+    # 질문 게시판 글 수정
+    path('question/update/<int:pk>/', views.question_update, name='question-update'),
     # 질문 게시판에 글 삭제
     path('question/del/<int:pk>/', views.question_delete, name='question-delete'),
 

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, ListView, DetailView
 
 from .models import Question, CommentQuestion
-from .forms import QuestionCreateForm, CommentCreateForm
+from .forms import QuestionCreateForm, QuestionUpdateForm, CommentCreateForm
 
 
 User = get_user_model()
@@ -104,6 +104,25 @@ def question_create(request):
 #         return render(request, 'community/question-create.html', context)
 
 
+def question_update(request, pk):
+    """
+    최초 get 요청에서는 기존의 데이터를 보여주기 위해 Form(instance=question) 만 사용
+    만약 request.POST, FILES 를 추가하면 모든 인스턴스를 초기화 상태로 두어
+    DB 에서는 데이터가 있지만 유저가 봤을 때는 빈 폼으로 보여지는 상태를 가지게 됨
+    """
+    question = get_object_or_404(Question, pk=pk)
+    if request.method == 'POST':
+        form = QuestionUpdateForm(request.POST, request.FILES, instance=question)
+        if form.is_valid():
+            form.save()
+            return redirect('community:questions')
+    form = QuestionUpdateForm(instance=question)
+    context = {
+        'form': form
+    }
+    return render(request, 'community/question-create.html', context)
+
+
 class QuestionDeleteView(DeleteView):
     """질문 게시판 글 삭제"""
     model = Question
@@ -143,12 +162,13 @@ question_delete = QuestionDeleteView.as_view()
 @login_required
 def comment_create(request, question_pk):
     if request.method == 'POST':
-        question = Question.objects.get(pk=question_pk)
+        question = get_object_or_404(Question, pk=question_pk)
+        # question = Question.objects.get(pk=question_pk)
 
         form = CommentCreateForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
-            # comment.user = request.user
+            comment.user = request.user
             comment.question = question
             comment.content = form.cleaned_data['content']
             comment.image = form.cleaned_data['image']

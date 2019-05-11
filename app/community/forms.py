@@ -37,6 +37,38 @@ class QuestionCreateForm(forms.ModelForm):
         }
 
 
+class QuestionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            'title',
+            'content',
+            'image',
+        ]
+        labels = {
+            'title': '제목',
+            'content': '내용',
+            'image': '사진추가',
+        }
+        widgets = {
+            'title': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'content': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                }
+            ),
+            'image': forms.ClearableFileInput(
+                attrs={
+                    'class': 'form-control',
+                }
+            )
+        }
+
+
 class CommentCreateForm(forms.ModelForm):
     class Meta:
         model = CommentQuestion
