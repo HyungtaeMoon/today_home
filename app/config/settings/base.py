@@ -21,7 +21,7 @@ secrets = json.load(open(os.path.join(SECRETS_DIR, 'base.json')))
 AUTH_USER_MODEL = 'members.User'
 
 # superuser
-ADMIN_LOGIN = 'admin'
+ADMIN_LOGIN = 'admin@master.com'
 ADMIN_PASSWORD = 'pbkdf2_sha256$120000$78juPOAIQfg2$qe+CSJva7UQqullqFbWK3a94GBsSVQDnThTqmnyVEyU='
 
 AUTHENTICATION_BACKENDS = [

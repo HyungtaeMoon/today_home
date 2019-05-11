@@ -14,7 +14,7 @@ from .models import User
 #             ),
 #         }),
 #         ('개인정보', {
-#             'fields':(
+#             'fields': (
 #                 'profile_img',
 #             ),
 #         }),

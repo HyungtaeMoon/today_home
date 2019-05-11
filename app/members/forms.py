@@ -26,11 +26,13 @@ class LoginForm(forms.Form):
     )
 
 
-class SignupForm(UserCreationForm):
-    CHOICE_GENDER = (
+CHOICE_GENDER = (
         ('man', '남자'),
-        ('woman', '여자')
+        ('woman', '여자'),
     )
+
+
+class SignupForm(UserCreationForm):
     email = forms.EmailField(label='아이디(이메일 형식)')
     name = forms.CharField(max_length=10, label='이름')
     password1 = forms.PasswordInput()
@@ -38,7 +40,7 @@ class SignupForm(UserCreationForm):
     alias = forms.CharField(max_length=50, label='닉네임')
     gender = forms.CharField(label='성별', widget=forms.Select(choices=CHOICE_GENDER))
     profile_img = forms.ImageField(label='프로필 이미지(선택)', widget=forms.ClearableFileInput(), required=False)
-    cover_img = forms.ImageField(label='커퍼 이미지(선택)', widget=forms.ClearableFileInput(), required=False)
+    cover_img = forms.ImageField(label='커버 이미지(선택)', widget=forms.ClearableFileInput(), required=False)
     introduce = forms.CharField(label='자기소개', widget=forms.Textarea)
 
     class Meta:

@@ -55,7 +55,7 @@ def product_detail(request, product_pk):
 
 @login_required
 def my_cart(request):
-    cart_item = CartItem.objects.filter(user_id=request.user.pk)
+    cart_item = CartItem.objects.filter(user__id=request.user.pk)
     # 장바구니에 담긴 상품의 총 합계 가격
     total_price = 0
     for each_total in cart_item:
@@ -74,13 +74,13 @@ def add_cart(request, product_pk):
     product = Product.objects.get(pk=product_pk)
 
     try:
-        cart = CartItem.objects.get(product__id=product.pk, user_id=request.user.pk)
+        cart = CartItem.objects.get(product__id=product.pk, user__id=request.user.pk)
         print(cart)
         if cart:
             if cart.product.name == product.name:
                 cart.quantity += 1
                 cart.save()
-                cart_item = CartItem.objects.filter(user_id=request.user.pk)
+                cart_item = CartItem.objects.filter(user__id=request.user.pk)
                 print(cart_item)
                 print(request.user.pk)
     except CartItem.DoesNotExist:
@@ -91,7 +91,7 @@ def add_cart(request, product_pk):
             quantity=1,
         )
         cart.save()
-        cart_item = CartItem.objects.filter(user_id=request.user.pk)
+        cart_item = CartItem.objects.filter(user__id=request.user.pk)
         print(f'{cart_item} 은 생성되었습니다.')
     # return render(request, 'cart/cart-list.html', {'cart_item': cart_item})
     return redirect('product:my-cart')

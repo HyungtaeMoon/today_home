@@ -8,7 +8,7 @@ User = get_user_model()
 class Question(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to='question', null=True, blank=True)
+    image = models.ImageField(upload_to='questions', null=True, blank=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -24,8 +24,9 @@ class Question(models.Model):
 
 # 모델은 단수로 사용하고, 주기능을 앞에 두어 Camel-case 로 설정
 class CommentQuestion(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    # # user 는 Question 모델에서 참조하여 사용
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE)
     content = models.TextField()
     image = models.ImageField(upload_to='question_comment', null=True)
     like = models.PositiveIntegerField(default=0)

@@ -21,7 +21,7 @@ def questions(request):
 
 def question_detail(request, question_pk):
     question_detail = Question.objects.get(pk=question_pk)
-    comment_list = CommentQuestion.objects.filter(question_id=question_detail.pk)
+    comment_list = CommentQuestion.objects.filter(question__id=question_detail.pk)
     context = {
         'question_detail': question_detail,
         'comment_list': comment_list,
@@ -39,7 +39,7 @@ def question_create(request):
         if user is not None:
             if form.is_valid():
                 question = form.save(commit=False)
-                question.user = request.user
+                # question.user = request.user
                 question.title = form.cleaned_data['title']
                 question.content = form.cleaned_data['content']
                 question.image = form.cleaned_data['image']
@@ -122,7 +122,7 @@ def comment_create(request, question_pk):
         form = CommentCreateForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = request.user
+            # comment.user = request.user
             comment.question = question
             comment.content = form.cleaned_data['content']
             comment.image = form.cleaned_data['image']
