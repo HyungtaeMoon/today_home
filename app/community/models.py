@@ -25,8 +25,8 @@ class Question(models.Model):
 # 모델은 단수로 사용하고, 주기능을 앞에 두어 Camel-case 로 설정
 class CommentQuestion(models.Model):
     # # user 는 Question 모델에서 참조하여 사용
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
     image = models.ImageField(upload_to='question_comment', null=True)
     like = models.PositiveIntegerField(default=0)
