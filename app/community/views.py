@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, ListView
 
 from .models import Question, CommentQuestion
 from .forms import QuestionCreateForm, CommentCreateForm
@@ -11,12 +11,20 @@ from .forms import QuestionCreateForm, CommentCreateForm
 User = get_user_model()
 
 
-def questions(request):
-    questions = Question.objects.all()
-    context = {
-        'questions': questions,
-    }
-    return render(request, 'community/questions.html', context)
+class QuestionListView(ListView):
+    """
+    model 또는 queryset 으로 원하는 데이터를 불러옴
+    model -> <class 'community.models.Question>
+    queryset -> <QuerySet [<Question: 궁금한게 있어요>...]>
+    """
+    template_name = 'question_list.html'
+    queryset = Question.objects.all()
+    # model = Question
+    context_object_name = 'question_list'
+    paginate_by = 5
+
+
+questions = QuestionListView.as_view()
 
 
 def question_detail(request, question_pk):
@@ -39,7 +47,7 @@ def question_create(request):
         if user is not None:
             if form.is_valid():
                 question = form.save(commit=False)
-                # question.user = request.user
+                question.user = request.user
                 question.title = form.cleaned_data['title']
                 question.content = form.cleaned_data['content']
                 question.image = form.cleaned_data['image']
