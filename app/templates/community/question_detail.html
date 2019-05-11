@@ -6,32 +6,26 @@
         <div class="row">
             <div class="col-7">
                 <div class="text-info">질문과 답변</div>
-                <div><h4><b>{{ question_detail }}</b></h4></div>
+                <div><h4><b>{{ question }}</b></h4></div>
                 <br>
-                <div>{{ question_detail.content }}</div>
+                <div>{{ question.content }}</div>
                 <br>
-                <img src="{{ question_detail.image.url }}" style="height: 300px; width: 280px;" alt="">
+                <img src="{{ question.image.url }}" style="height: 300px; width: 280px;" alt="">
                 <br>
-                <div><small>{{ question_detail.created_at }}</small></div>
-                <a href="{% url 'community:question-delete' question_detail.pk %}"><button class="btn btn-outline-danger">삭제</button></a>
+                <div><small>{{ question.created_at }}</small></div>
+                <a href="{% url 'community:question-delete' question.pk %}"><button class="btn btn-outline-danger">삭제</button></a>
                 <hr>
                 <h4>답글</h4>
 
-                {#                <a href="{% url 'community:comment-create' community_pk=community_detail.pk %}" class="btn btn-outline-secondary">댓글 남기기</a>#}
-
-                <form method="POST" action="{% url 'community:comment-create' question_detail.pk %}" enctype="multipart/form-data">
+                <form method="POST" action="{% url 'community:comment-create' question.pk %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form }}
                     <button class="btn btn-sm btn-outline-info float-right" type="submit">댓글 남기기</button>
                 </form>
-
                 <br>
-                {% for comment in comment_list %}
-                    <div><b>{{ comment.user }}</b></div>
-                    <div>{{ comment.content }}</div>
-                    <div>{{ comment.created_at }} | <a href="">&#9825;좋아요({{ comment.like }})</a></div>
-                    <br>
-                {% endfor %}
+                <br>
+                {% include 'community/comment_list.html' %}
+
             </div>
         </div>
     </div>

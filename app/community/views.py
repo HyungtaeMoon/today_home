@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, ListView
+from django.views.generic import DeleteView, ListView, DetailView
 
 from .models import Question, CommentQuestion
 from .forms import QuestionCreateForm, CommentCreateForm
@@ -27,14 +27,32 @@ class QuestionListView(ListView):
 questions = QuestionListView.as_view()
 
 
-def question_detail(request, question_pk):
-    question_detail = Question.objects.get(pk=question_pk)
-    comment_list = CommentQuestion.objects.filter(question__id=question_detail.pk)
-    context = {
-        'question_detail': question_detail,
-        'comment_list': comment_list,
-    }
-    return render(request, 'community/question_detail.html', context)
+class QuestionDetailView(DetailView):
+    """
+    model, queryset, get_object() 중에서 하나만 선택하여 DB 에 접근해도 정상 작동함
+    """
+    template_name = 'community/question_detail.html'
+    # model = Question
+    # queryset = Question.objects.all()
+
+    def get_object(self):
+        return get_object_or_404(Question, pk=self.kwargs.get('pk', None))
+
+
+question_detail = QuestionDetailView.as_view()
+
+# def question_detail(request, question_pk):
+#     """
+#     question <- commentquestion 이 FK 로 참조하고 있는데 이를 활용하지 않고 comment_list 를 컨텍스트에 따로 받다니..
+#     question.commentquestion_set.all 로 컨텍스트에 뿌리면 되는데 너무 무식했다.
+#     """
+#     question_detail = Question.objects.get(pk=question_pk)
+#     comment_list = CommentQuestion.objects.filter(question__id=question_detail.pk)
+#     context = {
+#         'question_detail': question_detail,
+#         'comment_list': comment_list,
+#     }
+#     return render(request, 'community/question_detail.html', context)
 
 
 @login_required

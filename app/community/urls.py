@@ -11,7 +11,7 @@ urlpatterns = [
     # 질문 게시판 메인 페이지(복수의 질문리스트이기 때문에 questions 복수 형태로 사용
     path('questions/', views.questions, name='questions'),
     # 질문 게시판 디테일 페이지(question 은 단수로 사용)
-    path('question/<int:question_pk>/', views.question_detail, name='question-detail'),
+    path('question/<int:pk>/', views.question_detail, name='question-detail'),
     # 질문 게시판에 글 생성
     path('question/new/', views.question_create, name='question-create'),
     # 질문 게시판에 글 삭제
