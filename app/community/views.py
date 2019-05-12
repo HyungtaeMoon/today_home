@@ -17,7 +17,7 @@ class QuestionListView(ListView):
     model -> <class 'community.models.Question>
     queryset -> <QuerySet [<Question: 궁금한게 있어요>...]>
     """
-    template_name = 'question_list.html'
+    template_name = 'community/question_list.html'
     queryset = Question.objects.all()
     # model = Question
     context_object_name = 'question_list'
