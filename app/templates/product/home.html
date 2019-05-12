@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto"><h4>카테고리</h4></div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-sm-2">
+                    <div class="card text-center border-0">
+                        <a href="#"><img class="card-img-top img-fluid" style="width: 80px; height: 80px;" src="{{ category.image.url }}" alt="Card image cap"></a>
+                        <div class="card-block">
+                            <p class="card-title">{{ category.name }}</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto"><h4>인기상품</h4></div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-sm-3">
+                    <div class="card border-0">
+                        <a href="#">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="Card image cap"></a>
+                        <div class="card-block">
+                            <br>
+                            <p class="card-title"><small class="text-muted">{{ product.company.name }}</small></p>
+                            <small class="card-title"><b>{{ product.name }}</b></small>
+                            <p class="card-text">{{ product.price | intcomma }} 원</p>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

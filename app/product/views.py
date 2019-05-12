@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, TemplateView
 
 from product.forms import CommentCreateForm, CommentUpdateForm
 from .models import Product, CartItem, Category, Comment
@@ -10,25 +10,59 @@ from .models import Product, CartItem, Category, Comment
 User = get_user_model()
 
 
-def main_total_list(request):
-    """메인 페이지로 추후 product-list 외에 다른 모델도 추가 예정"""
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    context = {
-        'products': products,
-        'categories': categories,
-    }
-    return render(request, 'product/total-list.html', context)
+# def main_total_list(request):
+#     products = Product.objects.all()
+#     categories = Category.objects.all()
+#     context = {
+#         'products': products,
+#         'categories': categories,
+#     }
+#     return render(request, 'product/home.html', context)
 
 
-def category_list(request):
-    category_list = Category.objects.all()
-    product_list = Product.objects.all()
-    context = {
-        'category_list': category_list,
-        'product_list': product_list,
-    }
-    return render(request, 'product/category-list.html', context)
+class Home(TemplateView):
+    """
+    FBV 로 2개의 multiple 한 쿼리셋을 context 에 담아 해당 템플릿으로 렌더링하는 것을
+    TemplateView 로 리팩토링하여 재구현
+    """
+    template_name = 'product/home.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['products'] = Product.objects.all()
+        context_data['categories'] = Category.objects.all()
+        return context_data
+
+
+home = Home.as_view()
+
+
+class CategoryList(TemplateView):
+    """
+    스토어 > 상품 리스트의 메인 페이지
+
+    body 페이지에는 등록된 모든 상품,
+    왼쪽 사이드 바 페이지에는 모든 카테고리를 보여줌
+    """
+    template_name = 'product/category-list.html'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['product_list'] = Product.objects.all()
+        context_data['category_list'] = Category.objects.all()
+        return context_data
+
+
+category_list = CategoryList.as_view()
+
+# def category_list(request):
+#     category_list = Category.objects.all()
+#     product_list = Product.objects.all()
+#     context = {
+#         'category_list': category_list,
+#         'product_list': product_list,
+#     }
+#     return render(request, 'product/category-list.html', context)
 
 
 def category_detail(request, category_pk):
