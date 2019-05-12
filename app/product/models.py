@@ -39,8 +39,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products', blank=True)
     # 가격은 양수만 취급하기 때문에 PositiveIntegerField
     price = models.PositiveIntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='products')
     available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
