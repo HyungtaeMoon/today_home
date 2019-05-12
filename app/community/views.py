@@ -133,8 +133,8 @@ class QuestionDeleteView(DeleteView):
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         success_url = self.get_success_url()
-        self.object.delete()
         if self.object.user == self.request.user:
+            self.object.delete()
             return redirect('community:questions')
         return redirect('community:questions')
 
