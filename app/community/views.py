@@ -126,12 +126,14 @@ def question_update(request, pk):
 class QuestionDeleteView(DeleteView):
     """질문 게시판 글 삭제"""
     model = Question
+    template_name = 'community/community_confirm_delete.html'
 
     success_url = reverse_lazy('community:questions')
 
     def delete(self, request, *args, **kwargs):
         self.object = self.get_object()
         success_url = self.get_success_url()
+        self.object.delete()
         if self.object.user == self.request.user:
             return redirect('community:questions')
         return redirect('community:questions')

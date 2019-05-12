@@ -1,5 +1,33 @@
-<form action="" method="POST">
-    {% csrf_token %}
-    <p>정말 삭제하시겠습니까?</p>
-    <input type="submit" value="삭제하겠습니다" class="btn btn-outline-danger">
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <br>
+                <div class="text-info">질문과 답변</div>
+                <div><h4><b>{{ question|truncatewords:30 }}</b></h4></div>
+                <br>
+
+                <div>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <p>[본문]</p>
+                            <p>({{ question.content|truncatewords:50 }})</p>
+                            <p>...</p>
+                            <p>...</p>
+                            <br>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-outline-danger" type="submit">해당 게시글을 삭제하시겠습니까?</button>
+                            <a href="{% url 'community:question-detail' question.pk %}" class="btn btn-outline-secondary">취소</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
