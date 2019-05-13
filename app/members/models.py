@@ -41,10 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     # 일반 유저는 staff 권한이 없어야 함(default=False)
     is_staff = models.BooleanField(default=False)
 
-    alias = models.CharField(max_length=20, null=True)
+    alias = models.CharField(max_length=20, null=True, unique=True)
     gender = models.CharField(max_length=5, choices=CHOICE_GENDER)
     profile_img = models.ImageField(upload_to='profile', blank=True, null=True)
     cover_img = models.ImageField(upload_to='cover', blank=True, null=True)
+    address = models.CharField(max_length=100)
     introduce = models.TextField(max_length=255)
 
     # UserManager 을 재정의하여 사용
