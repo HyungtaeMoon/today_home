@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
-from django.views.generic import ListView, UpdateView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, UpdateView, TemplateView, DeleteView
 
 from product.forms import CommentCreateForm, CommentUpdateForm
 from .models import Product, CartItem, Category, Comment
@@ -134,6 +135,15 @@ def add_cart(request, product_pk):
     return redirect('product:my-cart')
 
 
+def my_cart_item_delete(request, product_pk):
+    cart_item = CartItem.objects.filter(product__id=product_pk)
+    product = Product.objects.get(pk=product_pk)
+    for item in cart_item:
+        if item.product.name == product.name:
+            item.delete()
+        return redirect('product:my-cart')
+
+
 def comment_create(request, product_pk):
     if request.method == 'POST':
         product = get_object_or_404(Product, pk=product_pk)
@@ -221,12 +231,3 @@ class SearchListView(ListView):
         context = super().get_context_data(**kwargs)
         context['q'] = self.q
         return context
-
-
-# def filtered_by_created_at(request, product_pk):
-#     filtered_obj = Comment.objects.filter(product__id=product_pk)
-#     comment = filtered_obj.order_by('created_at')
-#     context = {
-#         'comment': comment,
-#     }
-#     return render(request, 'product/comment.html', context)

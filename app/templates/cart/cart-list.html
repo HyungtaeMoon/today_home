@@ -10,6 +10,7 @@
                 <form action="" method="POST">
                     {% csrf_token %}
                     {% if cart_item %}
+
                         {% for cart in cart_item %}
                             <table class="table table-border">
                                 <th>
@@ -20,7 +21,7 @@
                                     <td>
                                         <span><img src="{{ cart.product.image.url }}" style="width: 80px; height: 100px;"></span>
                                         <b>{{ cart.product.name }}</b>
-                                        <button class="btn-outline-info btn-sm">주문삭제</button>
+                                        <a class="btn-outline-info btn-sm" href="{% url 'product:delete-cart' cart.product.id %}">주문삭제</a>
                                     </td>
                                     <td class="text-right">
                                         <div>수량: {{ cart.quantity }} | 가격: {{ cart.product.price | intcomma }} 원</div>
