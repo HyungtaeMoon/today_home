@@ -59,7 +59,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = [
-            'email',
+            # 'email',
             'name',
             'alias',
             'gender',
@@ -67,12 +67,15 @@ class UserProfileForm(forms.ModelForm):
             'cover_img',
             'introduce'
         ]
+        labels = {
+            'name': '이름',
+            'alias': '닉네임',
+            'gender': '성별',
+            'profile_img': '프로필 이미지',
+            'cover_img': '커버 이미지',
+            'introduce': '자기소개'
+        }
         widget = {
-            'email': forms.EmailInput(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
             'name': forms.TextInput(
                 attrs={
                     'class': 'form-control',

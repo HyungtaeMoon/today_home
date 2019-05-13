@@ -9,16 +9,14 @@ User = get_user_model()
 
 @login_required
 def profile(request):
+    user = User.objects.get(pk=request.user.id)
     if request.method == 'POST':
         # pk 나 username 등으로 식별할 수 있는 정보를 매개변수로 받지 않기 때문에
         #   instance=request.user 로 유저를 판단
-        form = UserProfileForm(
-            request.POST,
-            request.FILES,
-            instance=request.user
-        )
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             form.save()
+            return redirect('members:profile')
     form = UserProfileForm(instance=request.user)
     context = {
         'form': form,
