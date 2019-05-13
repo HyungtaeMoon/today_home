@@ -29,8 +29,8 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['products'] = Product.objects.all()
-        context_data['categories'] = Category.objects.all()
+        context_data['product_list'] = Product.objects.all()
+        context_data['category_list'] = Category.objects.all()
         return context_data
 
 
@@ -66,6 +66,9 @@ category_list = CategoryList.as_view()
 
 
 def category_detail(request, category_pk):
+    """
+    store 에서 각 카테고리에 맞는 상품 페이지들을 보여줌
+    """
     category_list = Category.objects.all()
     category_detail = Category.objects.get(id=category_pk)
     product_list = Product.objects.filter(category__id=category_detail.id)
@@ -133,7 +136,7 @@ def add_cart(request, product_pk):
 
 def comment_create(request, product_pk):
     if request.method == 'POST':
-        product = Product.objects.get(pk=product_pk)
+        product = get_object_or_404(Product, pk=product_pk)
         form = CommentCreateForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -218,3 +221,12 @@ class SearchListView(ListView):
         context = super().get_context_data(**kwargs)
         context['q'] = self.q
         return context
+
+
+# def filtered_by_created_at(request, product_pk):
+#     filtered_obj = Comment.objects.filter(product__id=product_pk)
+#     comment = filtered_obj.order_by('created_at')
+#     context = {
+#         'comment': comment,
+#     }
+#     return render(request, 'product/comment.html', context)

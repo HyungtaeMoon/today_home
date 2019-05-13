@@ -12,10 +12,12 @@
     <br>
     <div class="container">
         <div class="row">
-            {% for category in categories %}
+            {% for category in category_list %}
                 <div class="col-sm-2">
                     <div class="card text-center border-0">
-                        <a href="#"><img class="card-img-top img-fluid" style="width: 80px; height: 80px;" src="{{ category.image.url }}" alt="Card image cap"></a>
+                        <a href="{% url 'product:category-detail' category.pk %}">
+                            <img class="card-img-top img-fluid" style="width: 80px; height: 80px;" src="{{ category.image.url }}" alt="카테고리 리스트">
+                        </a>
                         <div class="card-block">
                             <p class="card-title">{{ category.name }}</p>
                         </div>
@@ -36,11 +38,11 @@
     <br>
     <div class="container">
         <div class="row">
-            {% for product in products %}
+            {% for product in product_list %}
                 <div class="col-sm-3">
                     <div class="card border-0">
-                        <a href="#">
-                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="Card image cap"></a>
+                        <a href="{% url 'product:product-detail' product.pk %}">
+                            <img class="card-img-top img-fluid" src="{{ product.image.url }}" alt="상품 리스트"></a>
                         <div class="card-block">
                             <br>
                             <p class="card-title"><small class="text-muted">{{ product.company.name }}</small></p>
