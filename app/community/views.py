@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, ListView, DetailView
@@ -182,3 +183,33 @@ def comment_create(request, question_pk):
         'form': form,
     }
     return render(request, 'community/comment-create.html', context)
+
+
+class QuestionSearchListView(ListView):
+    """
+    템플릿에서도 name=q 를 qq 로 변경함
+    현재 사이트에서 name=q 로 메인 검색(상품 검색)이 존재하기 때문에 다른 변수명을 주었음
+    같은 변수명으로 할당하면 검색결과 기능에는 문제없지만 메인 검색에도 검색 텍스트가 존재함
+    """
+    model = Question
+    queryset = Question.objects.all()
+    template_name = 'community/question_result.html'
+
+    def get_queryset(self):
+        self.q = self.request.GET.get('qq', '')
+
+        qs = super().get_queryset()
+        if self.q:
+            qs = qs.filter(
+                Q(title__icontains=self.q) |
+                Q(content__icontains=self.q)
+            )
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['qq'] = self.q
+        return context
+
+
+question_search_view = QuestionSearchListView.as_view()
