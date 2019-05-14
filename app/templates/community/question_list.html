@@ -61,21 +61,21 @@
                 {% if is_paginated %}
                     <ul class="pagination">
                         {% if page_obj.has_previous %}
-                            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></li>
                         {% else %}
-                            <li class="disabled"><span>&laquo;</span></li>
+                            <li class="disabled"><span><i class="fas fa-arrow-circle-left"></i></span></li>
                         {% endif %}
                         {% for i in paginator.page_range %}
                             {% if page_obj.number == i %}
-                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                <li class="active"><span> ( {{ i }} Page ) <span class="sr-only">(current)</span></span></li>
                             {% else %}
-                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                <li><a href="?page={{ i }}">{{ i }}Page..</a></li>
                             {% endif %}
                         {% endfor %}
                         {% if page_obj.has_next %}
-                            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                            <li><a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></li>
                         {% else %}
-                            <li class="disabled"><span>&raquo;</span></li>
+                            <li class="disabled"><span><i class="fas fa-arrow-circle-right"></i></span></li>
                         {% endif %}
                     </ul>
                 {% endif %}
