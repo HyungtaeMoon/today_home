@@ -14,7 +14,7 @@
                         {% for cart in cart_item %}
                             <table class="table table-border">
                                 <th>
-                                    {{ cart.product.company.name }}
+                                    <p>{{ cart.product.company.name }}</p>
                                 </th>
                                 <tbody class="table table-bordered">
                                 <tr>
@@ -24,9 +24,13 @@
                                         <a class="btn-outline-info btn-sm" href="{% url 'product:delete-cart' cart.product.id %}">주문삭제</a>
                                     </td>
                                     <td class="text-right">
+                                        <small>
+                                            <a href="{% url 'product:plus-item' cart.product.id %}"> 수량 <i class="fas fa-plus-circle"></i></a> |
+                                            <a href="{% url 'product:minus-item' cart.product.id %}"> 수량 <i class="fas fa-minus-circle"></i></a>
+                                        </small>
                                         <div>수량: {{ cart.quantity }} | 가격: {{ cart.product.price | intcomma }} 원</div>
                                         <br>
-                                        <div>주문 금액: {{ cart.sub_total | intcomma }} 원</div>
+                                        <div><b>주문 금액: {{ cart.sub_total | intcomma }} 원</b></div>
                                     </td>
                                 </tr>
                                 </tbody>

@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, TemplateView, DeleteView
@@ -142,6 +143,42 @@ def my_cart_item_delete(request, product_pk):
         if item.product.name == product.name:
             item.delete()
         return redirect('product:my-cart')
+
+
+def minus_cart_item(request, product_pk):
+    cart_item = CartItem.objects.filter(product__id=product_pk)
+    product = Product.objects.get(pk=product_pk)
+    try:
+        for item in cart_item:
+            if item.product.name == product.name:
+                if item.quantity > 1:
+                    item.quantity -= 1
+                    item.save()
+                return redirect('product:my-cart')
+            else:
+                # messages 는 현재 동작하지 않음(form 을 통해 message 를 띄우기 때문에 기능은 보류 상태)
+                messages.error(request, '장바구니의 최소 수량은 1개입니다.', extra_tags='alert')
+                return redirect('product:my-cart')
+    except CartItem.DoesNotExist:
+        raise Http404
+
+
+def plus_cart_item(request, product_pk):
+    cart_item = CartItem.objects.filter(product__id=product_pk)
+    product = Product.objects.get(pk=product_pk)
+    try:
+        for item in cart_item:
+            if item.product.name == product.name:
+                if item.quantity:
+                    item.quantity += 1
+                    item.save()
+                return redirect('product:my-cart')
+            # else:
+            #     # messages 는 현재 동작하지 않음(form 을 통해 message 를 띄우기 때문에 기능은 보류 상태)
+            #     messages.error(request, '장바구니의 최소 수량은 1개입니다.', extra_tags='alert')
+            #     return redirect('product:my-cart')
+    except CartItem.DoesNotExist:
+        raise Http404
 
 
 def comment_create(request, product_pk):
