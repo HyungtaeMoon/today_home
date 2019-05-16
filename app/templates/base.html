@@ -6,7 +6,10 @@
     <title>프로젝트</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome-all.min.css' %}">#}
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+          crossorigin="anonymous">
 
 </head>
 <body>
@@ -32,7 +35,7 @@
 
             </ul>
             <form class="form-inline my-2 my-lg-0" action="{% url 'product:search' %}">
-                <input name="q" value="{{ q }}" class="form-control mr-sm-2" type="text" placeholder="검색" aria-label="Search">
+                <input name="q" value="{{ q }}" class="form-control mr-sm-2" type="text" placeholder="상품 검색" aria-label="Search">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </form>
             <ul class="navbar navbar-nav mx-auto">
@@ -55,6 +58,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="{% url 'product:home' %}">마이홈</a>
                             <a class="dropdown-item" href="">나의쇼핑</a>
+                            <a class="dropdown-item" href="{% url 'members:profile' %}">프로필 수정</a>
                             <a class="dropdown-item" href="{% url 'members:logout' %}">로그아웃</a>
                         </div>
                     </div>

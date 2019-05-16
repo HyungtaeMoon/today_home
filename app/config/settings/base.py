@@ -21,7 +21,7 @@ secrets = json.load(open(os.path.join(SECRETS_DIR, 'base.json')))
 AUTH_USER_MODEL = 'members.User'
 
 # superuser
-ADMIN_LOGIN = 'admin@master.com'
+ADMIN_LOGIN = 'mht@master.com'
 ADMIN_PASSWORD = 'pbkdf2_sha256$120000$78juPOAIQfg2$qe+CSJva7UQqullqFbWK3a94GBsSVQDnThTqmnyVEyU='
 
 AUTHENTICATION_BACKENDS = [
@@ -120,9 +120,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'ko-kr'
 
