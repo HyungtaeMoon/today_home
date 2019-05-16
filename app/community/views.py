@@ -127,24 +127,24 @@ def question_update(request, pk):
     return render(request, 'community/question-create.html', context)
 
 
-# class QuestionDeleteView(DeleteView):
-#     """질문 게시판 글 삭제"""
-#     model = Question
-#     template_name = 'community/community_confirm_delete.html'
-#
-#     success_url = reverse_lazy('community:questions')
-#
-#     def delete(self, request, *args, **kwargs):
-#         self.object = self.get_object()
-#         success_url = self.get_success_url()
-#         if self.object.user == self.request.user:
-#             self.object.delete()
-#             return redirect('community:questions')
-#         return redirect('community:questions')
-#
-#
-# # 질문게시판 1개를 삭제하기 때문에 단수 question
-# question_delete = QuestionDeleteView.as_view()
+class QuestionDeleteView(DeleteView):
+    """질문 게시판 글 삭제"""
+    model = Question
+    template_name = 'community/community_confirm_delete.html'
+
+    success_url = reverse_lazy('community:questions')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        if self.object.user == self.request.user:
+            self.object.delete()
+            return redirect('community:questions')
+        return redirect('community:questions')
+
+
+# 질문게시판 1개를 삭제하기 때문에 단수 question
+question_delete = QuestionDeleteView.as_view()
 
 
 # def comment_create(request, community_pk):

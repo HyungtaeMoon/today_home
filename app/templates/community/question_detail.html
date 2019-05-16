@@ -8,7 +8,7 @@
                 <div class="text-info">질문과 답변</div>
                 <div><h4><b>{{ question }}</b></h4></div>
                 {% if request.user.id == question.user.id %}
-{#                    <a href="{% url 'community:question-delete' question.pk %}" class="btn btn-outline-danger">질문 삭제</a>#}
+                    <a href="{% url 'community:question-delete' question.pk %}" class="btn btn-outline-danger">질문 삭제</a>
                 {% endif %}
 
                 <a href="{% url 'community:question-update' question.pk %}" class="btn btn-outline-secondary">질문 수정</a>
@@ -17,7 +17,7 @@
 
                 <br>
                 <br>
-                <div>{{ question.content }}</div>
+                <div>{{ question.content|linebreaks }}</div>
                 <br>
                 <img src="{{ question.image.url }}" style="height: 300px; width: 280px;" alt="">
                 <br>
