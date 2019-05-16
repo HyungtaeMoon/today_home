@@ -3,23 +3,12 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, TemplateView, DeleteView
+from django.views.generic import ListView, UpdateView, TemplateView
 
-from product.forms import CommentCreateForm, CommentUpdateForm
+from product.forms import CommentCreateForm
 from .models import Product, CartItem, Category, Comment
 
 User = get_user_model()
-
-
-# def main_total_list(request):
-#     products = Product.objects.all()
-#     categories = Category.objects.all()
-#     context = {
-#         'products': products,
-#         'categories': categories,
-#     }
-#     return render(request, 'product/home.html', context)
 
 
 class Home(TemplateView):
@@ -56,15 +45,6 @@ class CategoryList(TemplateView):
 
 
 category_list = CategoryList.as_view()
-
-# def category_list(request):
-#     category_list = Category.objects.all()
-#     product_list = Product.objects.all()
-#     context = {
-#         'category_list': category_list,
-#         'product_list': product_list,
-#     }
-#     return render(request, 'product/category-list.html', context)
 
 
 def category_detail(request, category_pk):
@@ -217,30 +197,6 @@ class CommentUpdateView(UpdateView):
 
 
 comment_edit = CommentUpdateView.as_view()
-
-# @login_required
-# def comment_update(request, comment_pk):
-#     """상품 디테일 페이지에서 해당하는 댓글 내용을 수정하는 기능"""
-#     if request.method == 'POST':
-#         # product = Product.objects.get(pk=product_pk)
-#         comment = Comment.objects.get(comment_pk=comment_pk)
-#         product = Product.objects.get(comment_pk=comment.pk)
-#
-#         form = CommentUpdateForm(request.POST, request.FILES)
-#
-#         if form.is_valid():
-#             comment = form.save(commit=False)
-#             comment.rating = form.cleaned_data['rating']
-#             comment.content = form.cleaned_data['content']
-#             comment.image = form.cleaned_data['image']
-#             comment.save()
-#             return redirect('product:product-detail', product.pk)
-#
-#     form = CommentUpdateForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'product/comment.html', context)
 
 
 @login_required
