@@ -34,10 +34,10 @@ class QuestionDetailView(DetailView):
     """
     template_name = 'community/question_detail.html'
     # model = Question
-    # queryset = Question.objects.all()
+    queryset = Question.objects.all()
 
-    def get_object(self):
-        return get_object_or_404(Question, pk=self.kwargs.get('pk', None))
+    # def get_object(self):
+    #     return get_object_or_404(Question, pk=self.kwargs.get('pk', None))
 
 
 question_detail = QuestionDetailView.as_view()
@@ -66,7 +66,7 @@ def question_create(request):
         if user is not None:
             if form.is_valid():
                 question = form.save(commit=False)
-                question.user = request.user
+                question.user = user
                 question.title = form.cleaned_data['title']
                 question.content = form.cleaned_data['content']
                 question.image = form.cleaned_data['image']
@@ -112,9 +112,12 @@ def question_update(request, pk):
     DB 에서는 데이터가 있지만 유저가 봤을 때는 빈 폼으로 보여지는 상태를 가지게 됨
     """
     question = get_object_or_404(Question, pk=pk)
+    user = User.objects.get(pk=request.user.id)
     if request.method == 'POST':
         form = QuestionUpdateForm(request.POST, request.FILES, instance=question)
         if form.is_valid():
+            question = form.save(commit=False)
+            question.user = user
             form.save()
             return redirect('community:questions')
     form = QuestionUpdateForm(instance=question)
@@ -124,24 +127,24 @@ def question_update(request, pk):
     return render(request, 'community/question-create.html', context)
 
 
-class QuestionDeleteView(DeleteView):
-    """질문 게시판 글 삭제"""
-    model = Question
-    template_name = 'community/community_confirm_delete.html'
-
-    success_url = reverse_lazy('community:questions')
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        success_url = self.get_success_url()
-        if self.object.user == self.request.user:
-            self.object.delete()
-            return redirect('community:questions')
-        return redirect('community:questions')
-
-
-# 질문게시판 1개를 삭제하기 때문에 단수 question
-question_delete = QuestionDeleteView.as_view()
+# class QuestionDeleteView(DeleteView):
+#     """질문 게시판 글 삭제"""
+#     model = Question
+#     template_name = 'community/community_confirm_delete.html'
+#
+#     success_url = reverse_lazy('community:questions')
+#
+#     def delete(self, request, *args, **kwargs):
+#         self.object = self.get_object()
+#         success_url = self.get_success_url()
+#         if self.object.user == self.request.user:
+#             self.object.delete()
+#             return redirect('community:questions')
+#         return redirect('community:questions')
+#
+#
+# # 질문게시판 1개를 삭제하기 때문에 단수 question
+# question_delete = QuestionDeleteView.as_view()
 
 
 # def comment_create(request, community_pk):
@@ -164,14 +167,21 @@ question_delete = QuestionDeleteView.as_view()
 
 @login_required
 def comment_create(request, question_pk):
+    """
+    form 으로 처리하기 위해 POST 요청을 받고, FK 로 참조한 게시판(Question)이 있는지 확인
+    Comment 모델에서 FK 로 User 를 참조하고 있기 때문에 user 인스턴스를 request.user.id 로 받아서 User 모델에서 해당 인스턴스를 참조
+    form 을 저장하기 전에 commit=False 옵션으로 save() 를 잠시 대기 상태로 놓고 user 인스턴스를 생성되는 게시판 댓글의 user 로 할당
+    (question 변수인 질문게시판도 동일 바로 윗줄의 내용과 동일한 흐름)
+    """
     if request.method == 'POST':
         question = get_object_or_404(Question, pk=question_pk)
         # question = Question.objects.get(pk=question_pk)
+        user = User.objects.get(pk=request.user.id)
 
         form = CommentCreateForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = request.user
+            comment.user = user
             comment.question = question
             comment.content = form.cleaned_data['content']
             comment.image = form.cleaned_data['image']
