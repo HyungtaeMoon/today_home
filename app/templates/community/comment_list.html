@@ -1,6 +1,6 @@
 
 {% for comment in question.comments.all %}
     <div>{{ comment.user }}</div>
-    <div><b>{{ comment.content }}</b></div>
+    <div><b>{{ comment.content|linebreaks }}</b></div>
     <div>{{ comment.created_at }} | <a href="">&#9825;좋아요({{ comment.like }})</a></div>
 {% endfor %}
