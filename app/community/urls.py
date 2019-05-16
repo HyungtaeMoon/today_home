@@ -17,10 +17,13 @@ urlpatterns = [
     # 질문 게시판 글 수정
     path('question/update/<int:pk>/', views.question_update, name='question-update'),
     # 질문 게시판에 글 삭제
-    path('question/del/<int:pk>/', views.question_delete, name='question-delete'),
+    # path('question/del/<int:pk>/', views.question_delete, name='question-delete'),
 
     # 질문 게시판 디테일의 댓글 작성
     path('question/comment/new/detail/<int:question_pk>/', views.comment_create, name='comment-create'),
+
+    # 질문 게시판 검색 기능
+    path('question/search/', views.question_search_view, name='search'),
 ]
 
 
