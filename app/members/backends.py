@@ -6,15 +6,15 @@ User = get_user_model()
 
 
 class SettingsBackend:
-    def authenticate(self, request, username=None, password=None):
-        login_valid = (settings.ADMIN_LOGIN == username)
+    def authenticate(self, request, email=None, password=None):
+        login_valid = (settings.ADMIN_LOGIN == email)
         password_valid = check_password(password, settings.ADMIN_PASSWORD)
 
         if login_valid and password_valid:
             try:
-                user = User.objects.get(username=username)
+                user = User.objects.get(email=email)
             except User.DoesNotExist:
-                    user = User(username=username)
+                    user = User(email=email)
                     user.is_staff = True
                     user.is_superuser = True
                     user.save()
