@@ -26,10 +26,10 @@ class Question(models.Model):
 class CommentQuestion(models.Model):
     # # user 는 Question 모델에서 참조하여 사용
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question = models.ForeignKey('Question', on_delete=models.CASCADE, related_name='comments')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
     image = models.ImageField(upload_to='question_comment', null=True)
-    like = models.PositiveIntegerField(default=0)
+    like = models.PositiveIntegerField(default=0, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
