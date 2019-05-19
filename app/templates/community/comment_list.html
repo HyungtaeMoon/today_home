@@ -1,6 +1,15 @@
 
 {% for comment in question.comments.all %}
-    <div>{{ comment.user }}</div>
-    <div><b>{{ comment.content|linebreaks }}</b></div>
-    <div>{{ comment.created_at }} | <a href="">&#9825;좋아요({{ comment.like }})</a></div>
+    <ul class="my_comment_ul">
+        <li><img src="{{ comment.user.profile_img.url }}" alt="프로필 이미지" style="height: 30px; width: 30px;"> | {{ comment.user.name }}</li>
+        <li><small>{{ comment.created_at }} <a href="">&#9825;좋아요({{ comment.like }})</a></small></li>
+        <li>{{ comment.content|linebreaks }}</li>
+    </ul>
 {% endfor %}
+
+<style>
+.my_comment_ul {
+    list-style: none;
+    padding-left: 1px;
+}
+</style>
