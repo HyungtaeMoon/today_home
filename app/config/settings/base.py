@@ -32,6 +32,9 @@ AUTHENTICATION_BACKENDS = [
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets['SECRET_KEY']
 
+FACEBOOK_APP_ID = secrets['FACEBOOK_APP_ID']
+FACEBOOK_APP_SECRET = secrets['FACEBOOK_APP_SECRET']
+
 # Static
 STATIC_URL = '/static/'
 # collectstatic 을 하면 모이게 되는 루트 경로
