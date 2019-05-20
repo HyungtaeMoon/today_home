@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
-from django.shortcuts import render, redirect, resolve_url, get_object_or_404
+from django.http import Http404, HttpResponse
+from django.shortcuts import render, redirect, resolve_url, get_object_or_404, render_to_response
 from django.views.generic import ListView, UpdateView, TemplateView
 
 from product.forms import CommentCreateForm, CommentUpdateForm
@@ -176,7 +176,7 @@ def comment_create(request, product_pk):
             comment.image = form.cleaned_data['image']
             comment.product = product
             form.save()
-            messages.success(request, '댓글이 생성되었습니다.')
+            # messages.success(request, '댓글이 생성되었습니다.')
             return redirect('product:product-detail', product.pk)
 
     form = CommentCreateForm()
@@ -186,23 +186,51 @@ def comment_create(request, product_pk):
     return render(request, 'product/comment-create.html', context)
 
 
-class CommentUpdateView(UpdateView):
-    model = Comment
-    fields = ['rating', 'content', 'image']
+# class CommentUpdateView(UpdateView):
+#     model = Comment
+#     fields = ['rating', 'content', 'image']
+#
+#     def get_object(self, *args, **kwargs):
+#         obj = super(CommentUpdateView, self).get_object(*args, **kwargs)
+#         if not obj.user == self.request.user:
+#             raise Http404
+#         return obj
+#
+#     def form_valid(self, form):
+#         form.instance.user = self.request.user
+#         return super(CommentUpdateView, self).form_valid(form)
+#
+#     def get_success_url(self):
+#         # Product 모델에서 get_absolute_url 로 reverse 경로를 지정해야
+#         # get_success_url 함수가 동작
+#         return resolve_url(self.object.product)
+#
+#
+# comment_edit = CommentUpdateView.as_view()
 
-    def get_object(self, *args, **kwargs):
-        obj = super(CommentUpdateView, self).get_object(*args, **kwargs)
-        if not obj.user == self.request.user:
-            raise Http404
-        return obj
 
-    def get_success_url(self):
-        # Product 모델에서 get_absolute_url 로 reverse 경로를 지정해야
-        # get_success_url 함수가 동작
-        return resolve_url(self.object.product)
+def comment_edit(request, product_pk, pk):
+    product = get_object_or_404(Product, pk=product_pk)
+    # Comment 객체 하나를 가져와야 하기 때문에 Comment 모델에서 출발
+    comment = Comment.objects.get(pk=pk)
+    if request.user.id == comment.user.id:
+        if request.method == 'POST':
+            form = CommentUpdateForm(request.POST, request.FILES, instance=comment)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.content = form.cleaned_data['content']
+                comment.rating = form.cleaned_data['rating']
+                comment.image = form.cleaned_data['image']
+                form.save()
+                return redirect('product:product-detail', comment.product.pk)
+        form = CommentUpdateForm(instance=comment)
+        context = {
+            'form': form,
+        }
+        return render(request, 'product/comment_form.html', context)
 
-
-comment_edit = CommentUpdateView.as_view()
+    messages.info(request, '[{}] 님이 작성하신 댓글이 아니에요. :-)'.format(comment.user))
+    return redirect('product:product-detail', comment.product.pk)
 
 
 @login_required
