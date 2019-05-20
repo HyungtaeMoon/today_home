@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404
 from django.views.generic import ListView, UpdateView, TemplateView
 
-from product.forms import CommentCreateForm
+from product.forms import CommentCreateForm, CommentUpdateForm
 from .models import Product, CartItem, Category, Comment
 
 User = get_user_model()
@@ -189,6 +189,12 @@ def comment_create(request, product_pk):
 class CommentUpdateView(UpdateView):
     model = Comment
     fields = ['rating', 'content', 'image']
+
+    def get_object(self, *args, **kwargs):
+        obj = super(CommentUpdateView, self).get_object(*args, **kwargs)
+        if not obj.user == self.request.user:
+            raise Http404
+        return obj
 
     def get_success_url(self):
         # Product 모델에서 get_absolute_url 로 reverse 경로를 지정해야
