@@ -87,7 +87,7 @@ class Comment(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField(max_length=250)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     image = models.ImageField(upload_to='comment-img')
     rating = models.IntegerField(choices=RATING_CHOICES, default=1)
     created_at = models.DateTimeField(auto_now_add=True)
