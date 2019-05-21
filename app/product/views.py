@@ -209,6 +209,7 @@ def comment_create(request, product_pk):
 # comment_edit = CommentUpdateView.as_view()
 
 
+@login_required
 def comment_edit(request, product_pk, pk):
     product = get_object_or_404(Product, pk=product_pk)
     # Comment 객체 하나를 가져와야 하기 때문에 Comment 모델에서 출발
@@ -222,6 +223,7 @@ def comment_edit(request, product_pk, pk):
                 comment.rating = form.cleaned_data['rating']
                 comment.image = form.cleaned_data['image']
                 form.save()
+                messages.info(request, '{} 님이 작성하신 댓글 수정이 완료되었습니다. :-)'.format(request.user.name))
                 return redirect('product:product-detail', comment.product.pk)
         form = CommentUpdateForm(instance=comment)
         context = {
@@ -229,7 +231,7 @@ def comment_edit(request, product_pk, pk):
         }
         return render(request, 'product/comment_form.html', context)
 
-    messages.info(request, '[{}] 님이 작성하신 댓글이 아니에요. :-)'.format(comment.user))
+    messages.info(request, '[{}] 님이 작성하신 댓글이 아니에요. :-)'.format(request.user.name))
     return redirect('product:product-detail', comment.product.pk)
 
 
