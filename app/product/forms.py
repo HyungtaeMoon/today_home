@@ -23,7 +23,17 @@ class CommentUpdateForm(forms.ModelForm):
         ]
 
 
-# class CommentUpdateForm(forms.Form):
+class CommentDeleteForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = [
+            'rating',
+            'content',
+            'image'
+        ]
+
+
+# class CommentDeleteForm(forms.Form):
 #     RATING_CHOICES = (
 #         (1, '재구매 의사 없어요(1점)'),
 #         (2, '별로에요(2점)'),

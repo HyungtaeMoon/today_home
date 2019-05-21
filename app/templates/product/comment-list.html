@@ -11,10 +11,10 @@
 <br>
 {% if comment_list %}
     {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-info text-center"><strong>{{ message }}</strong></div>
-    {% endfor %}
-{% endif %}
+        {% for message in messages %}
+            <div class="alert alert-info text-center"><strong>{{ message }}</strong></div>
+        {% endfor %}
+    {% endif %}
     <div class="container">
         <div class="row justify-content-center">
             {% for comment in comment_list %}
@@ -24,7 +24,7 @@
                             <h5 class="media-heading">{{ comment.product.name }}</h5>
                             <span class="text-muted">{{ comment.user }} | {{ comment.updated_at }} | 오늘의집 구매</span>
                             <p>{{ comment.content }} | 별점: {{ comment.rating }}</p>
-                            <a href="{% url 'product:comment-delete' product.id comment.id %}"
+                            <a href="{% url 'product:comment-delete' comment.pk %}"
                                class="btn btn-outline-danger">댓글 삭제하기
                             </a>
                             <a href="{% url 'product:comment-edit' product.pk comment.pk %}"

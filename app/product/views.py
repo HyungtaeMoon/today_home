@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, resolve_url, get_object_or_404, render_to_response
 from django.views.generic import ListView, UpdateView, TemplateView
 
-from product.forms import CommentCreateForm, CommentUpdateForm
+from product.forms import CommentCreateForm, CommentUpdateForm, CommentDeleteForm
 from .models import Product, CartItem, Category, Comment
 
 User = get_user_model()
@@ -236,13 +236,25 @@ def comment_edit(request, product_pk, pk):
 
 
 @login_required
-def comment_delete(request, comment_id, product_id):
-    product = Product.objects.get(pk=product_id)
-    comment = Comment.objects.get(pk=comment_id)
+def comment_delete(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    product = Product.objects.get(pk=comment.product.id)
 
+    # 댓글 작성자가 현재 로그인한 유저와 같을 때 get 요청으로 form 을 받고,
+    #   이후 post 로 form 을 받아 comment 인스턴스를 삭제
     if comment.user.pk == request.user.pk:
-        comment.delete()
-    return redirect('product:product-detail', product.pk)
+        if request.method == 'POST':
+            comment.delete()
+            messages.info(request, '댓글이 삭제되었습니다.')
+            return redirect('product:product-detail', product.id)
+        form = CommentDeleteForm()
+        context = {
+            'form': form,
+        }
+        return render(request, 'product/comment_confirm_delete.html', context)
+    # 댓글 작성자가 아닐 경우 messages 를 띄우고 해당 상품 상세 페이지 redirect()
+    messages.info(request, '댓글 작성자가 아닙니다.')
+    return redirect('product:product-detail', product.id)
 
 
 class SearchListView(ListView):

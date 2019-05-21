@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row justify-content-center">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <p>댓글을 삭제하시겠습니까?</p>
+                <input class="btn btn-success" type="submit" value="삭제하기"/>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('category/detail/comment_create/<int:product_pk>/', views.comment_create, name='comment-create'),
     path('category/detail/<int:product_pk>/comment_update/<int:pk>/', views.comment_edit, name='comment-edit'),
-    path('category/detail/<int:product_id>/comment_delete/<int:comment_id>/',
+    path('category/detail/comment_delete/<int:pk>/',
          views.comment_delete, name='comment-delete'),
 
     path('search/', views.SearchListView.as_view(), name='search'),
