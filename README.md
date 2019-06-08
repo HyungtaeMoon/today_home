@@ -3,7 +3,10 @@
 
 ## 오늘의 집
 
-사이트 링크\: `https://www.mht.kr`
+프로젝트 사이트\: `https://www.mht.kr`
+
+개인 블로그 주소\: [프로젝트를 선정 이유와 느낀 점](https://dev-mht.tistory.com/146?category=851117)
+
 
 ### 프로젝트 개요
 
