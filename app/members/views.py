@@ -3,14 +3,16 @@ import io
 import json
 from pprint import pprint
 
-import requests
+# import requests
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from django.urls import reverse_lazy
 
 from .forms import SignupForm, LoginForm, UserProfileForm
 
@@ -65,24 +67,20 @@ def logout_view(request):
 
 
 def signup_view(request):
-    """UserCreationForm 을 사용"""
+    """
+    UserCreationForm 을 사용
+
+    email, password1 을 form 에서 받아서 authenticate 한 이후 로그인 처리
+    """
     if request.method == 'POST':
         form = SignupForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
             email = form.cleaned_data['email']
             password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-            # name = form.cleaned_data['name']
-            # alias = form.cleaned_data['alias']
-            # gender = form.cleaned_data['gender']
-            # profile_img = form.cleaned_data['profile_img']
-            # cover_img = form.cleaned_data['cover_img']
-            # introduce = form.cleaned_data['introduce']
+            form.save()
             user = authenticate(request, email=email, password=password1)
             login(request, user)
             return redirect('product:category-list')
-
     else:
         form = SignupForm()
     context = {
@@ -91,61 +89,61 @@ def signup_view(request):
     return render(request, 'members/signup.html', context)
 
 
-def facebook_login(request):
-    api_base = 'https://graph.facebook.com/v3.3'
-    api_get_access_token = f'{api_base}/oauth/access_token?'
-    api_me = f'{api_base}/me'
-
-    code = request.GET.get('code')
-    params = {
-        'client_id': settings.FACEBOOK_APP_ID,
-        'redirect_uri': 'http://localhost:8000/members/facebook-login/',
-        'client_secret': settings.FACEBOOK_APP_SECRET,
-        'code': code,
-    }
-    response = requests.get(api_get_access_token, params)
-    response_object = json.loads(response.text)
-    data = response.json()
-    access_token = data['access_token']
-
-    params = {
-        'access_token': access_token,
-        'fields': ','.join([
-            'id',
-            'name',
-            'picture.type(large)',
-        ])
-        # 'fields': 'id, name, picture'
-    }
-
-    response = requests.get(api_me, params)
-    data = response.json()
-
-    facebook_id = data['id']
-    facebook_at = '@facebook.id'
-    name = data['name']
-    url_img_profile = data['picture']['data']['url']
-
-    img_response = requests.get(url_img_profile)
-    img_data = img_response.content
-
-    # f = io.BytesIO(img_response.content)
-
-    ext = imghdr.what('', h=img_data)
-    f = SimpleUploadedFile(f'{facebook_id}.{ext}', img_response.content)
-
-    try:
-        user = User.objects.get(email=facebook_id + facebook_at)
-        user.name = name
-        # user.profile_img = f
-        user.save()
-    except User.DoesNotExist:
-        user = User.objects.create_user(
-            email=facebook_id + facebook_at,
-            name=name,
-            profile_img=f,
-        )
-    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-    # pprint(data)
-    # return HttpResponse(str(data))
-    return redirect('product:home')
+# def facebook_login(request):
+#     api_base = 'https://graph.facebook.com/v3.3'
+#     api_get_access_token = f'{api_base}/oauth/access_token?'
+#     api_me = f'{api_base}/me'
+#
+#     code = request.GET.get('code')
+#     params = {
+#         'client_id': settings.FACEBOOK_APP_ID,
+#         'redirect_uri': 'http://localhost:8000/members/facebook-login/',
+#         'client_secret': settings.FACEBOOK_APP_SECRET,
+#         'code': code,
+#     }
+#     response = requests.get(api_get_access_token, params)
+#     response_object = json.loads(response.text)
+#     data = response.json()
+#     access_token = data['access_token']
+#
+#     params = {
+#         'access_token': access_token,
+#         'fields': ','.join([
+#             'id',
+#             'name',
+#             'picture.type(large)',
+#         ])
+#         # 'fields': 'id, name, picture'
+#     }
+#
+#     response = requests.get(api_me, params)
+#     data = response.json()
+#
+#     facebook_id = data['id']
+#     facebook_at = '@facebook.id'
+#     name = data['name']
+#     url_img_profile = data['picture']['data']['url']
+#
+#     img_response = requests.get(url_img_profile)
+#     img_data = img_response.content
+#
+#     # f = io.BytesIO(img_response.content)
+#
+#     ext = imghdr.what('', h=img_data)
+#     f = SimpleUploadedFile(f'{facebook_id}.{ext}', img_response.content)
+#
+#     try:
+#         user = User.objects.get(email=facebook_id + facebook_at)
+#         user.name = name
+#         # user.profile_img = f
+#         user.save()
+#     except User.DoesNotExist:
+#         user = User.objects.create_user(
+#             email=facebook_id + facebook_at,
+#             name=name,
+#             profile_img=f,
+#         )
+#     login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+#     # pprint(data)
+#     # return HttpResponse(str(data))
+#     return redirect('product:home')
