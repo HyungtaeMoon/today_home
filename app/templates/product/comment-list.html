@@ -1,8 +1,7 @@
 <div class="container">
     <a class="btn btn-outline-primary" href="#">베스트순</a>
-    <a class="btn btn-outline-secondary" href="#">촤신순</a>
+    <a class="btn btn-outline-secondary" href="{% url 'product:ordering-created' product.pk %}">최신순</a>
     <a class="btn btn-outline-secondary" href="#">낮은 평점순</a>
-
     {% if request.user %}
         <a class="btn btn-outline-info" href="{% url 'product:comment-create' product.pk %}" style="width: 250px">+ 리뷰 남기기<small> 최대 250포인트</small></a>
     {% endif %}

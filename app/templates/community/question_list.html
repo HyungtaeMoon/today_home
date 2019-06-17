@@ -2,7 +2,7 @@
 
 {% block content %}
 
-        <div class="container mx-auto p-5 mb-2" style="background-color: #F4F6F6;">
+    <div class="container mx-auto p-5 mb-2" style="background-color: #F4F6F6;">
         <div class="row justify-content-center">
             <h3>질문과 답변</h3>
         </div>
@@ -17,12 +17,12 @@
                     <a href="{% url 'community:search' %}"><i class="fas fa-search h5 text-body"></i><b>검색하러 가기</b></a>
                 </div>
                 <!--end of col-->
-{#                <div class="col-8 text-center">#}
-{#                    <form class="form-inline my-2 my-lg-0" action="{% url 'community:search' %}">#}
-{#                        <input name="q" value="{{ q }}" type="text" placeholder="궁금한 것을 검색해보세요">#}
-{#                        <a href="{% url 'community:search' %}" class="btn btn-outline-info">검색하러가기</a>#}
-{#                    </form>#}
-{#                </div>#}
+                {#                <div class="col-8 text-center">#}
+                {#                    <form class="form-inline my-2 my-lg-0" action="{% url 'community:search' %}">#}
+                {#                        <input name="q" value="{{ q }}" type="text" placeholder="궁금한 것을 검색해보세요">#}
+                {#                        <a href="{% url 'community:search' %}" class="btn btn-outline-info">검색하러가기</a>#}
+                {#                    </form>#}
+                {#                </div>#}
                 <!--end of col-->
             </div>
         </form>
@@ -41,13 +41,13 @@
     {% for question in question_list %}
         <div class="container mx-auto">
             <div class="row justify-content-center">
-                <div class="col-6 text-left">
+                <div class="col-8 col-sm-8 col-md-8 col-lg-6 text-left">
                     <hr>
                     <div><b><a href="{% url 'community:question-detail' question.pk %}">{{ question.title }}</a></b></div>
                     <div>{{ question.content|truncatechars:100 }}</div>
                     <div><small>{{ question.user }} | {{ question.created_at }}</small></div>
                 </div>
-                <div class="col-2 d-flex align-items-center">
+                <div class="d-flex align-items-center">
                     <img src="{{ question.image.url }}" style="height: 70px; width: 70px;" alt="">
                 </div>
             </div>
@@ -56,28 +56,31 @@
     <br>
     <div class="container mx-auto">
         <div class="row justify-content-center">
-            <div class="col-6 col-md-6 col-lg-4">
-                {% if is_paginated %}
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></li>
-                        {% else %}
-                            <li class="disabled"><span><i class="fas fa-arrow-circle-left"></i></span></li>
-                        {% endif %}
-                        {% for i in paginator.page_range %}
-                            {% if page_obj.number == i %}
-                                <li class="active"><span> ( {{ i }} Page ) <span class="sr-only">(current)</span></span></li>
+            <div class="align-content-center">
+                <div class="col-6 col-md-6 col-lg-4">
+
+                    {% if is_paginated %}
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-circle-left"></i></a></li>
                             {% else %}
-                                <li><a href="?page={{ i }}">{{ i }}Page..</a></li>
+                                <li class="disabled"><span><i class="fas fa-arrow-circle-left"></i></span></li>
                             {% endif %}
-                        {% endfor %}
-                        {% if page_obj.has_next %}
-                            <li><a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></li>
-                        {% else %}
-                            <li class="disabled"><span><i class="fas fa-arrow-circle-right"></i></span></li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                    <li class="active"><span>{{ i }}<span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-circle-right"></i></a></li>
+                            {% else %}
+                                <li class="disabled"><span><i class="fas fa-arrow-circle-right"></i></span></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
